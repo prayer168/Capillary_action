@@ -63,6 +63,9 @@ const applicationKicker = document.getElementById("applicationKicker");
 const applicationTitle = document.getElementById("applicationTitle");
 const applicationText = document.getElementById("applicationText");
 const applicationThink = document.getElementById("applicationThink");
+const applicationCanvas = document.getElementById("applicationCanvas");
+const applicationCtx = applicationCanvas?.getContext("2d");
+let activeApplication = "towel";
 
 document.querySelectorAll(".application-choice").forEach((button) => {
   button.addEventListener("click", () => {
@@ -71,12 +74,215 @@ document.querySelectorAll(".application-choice").forEach((button) => {
       choice.classList.toggle("is-active", choice === button);
     });
     applicationVisual.className = `application-visual ${item.scene}`;
+    activeApplication = button.dataset.app;
     applicationKicker.textContent = item.kicker;
     applicationTitle.textContent = item.title;
     applicationText.textContent = item.text;
     applicationThink.textContent = item.think;
   });
 });
+
+function resizeApplicationCanvas() {
+  if (!applicationCanvas || !applicationCtx) return { width: 0, height: 0 };
+  const rect = applicationCanvas.getBoundingClientRect();
+  const scale = Math.min(window.devicePixelRatio || 1, 2);
+  const width = Math.max(320, Math.round(rect.width));
+  const height = Math.max(280, Math.round(rect.height));
+  const pixelWidth = Math.round(width * scale);
+  const pixelHeight = Math.round(height * scale);
+  if (applicationCanvas.width !== pixelWidth || applicationCanvas.height !== pixelHeight) {
+    applicationCanvas.width = pixelWidth;
+    applicationCanvas.height = pixelHeight;
+  }
+  applicationCtx.setTransform(scale, 0, 0, scale, 0, 0);
+  return { width, height };
+}
+
+function roundedRect(ctx, x, y, width, height, radius) {
+  const r = Math.min(radius, width / 2, height / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + width - r, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+  ctx.lineTo(x + width, y + height - r);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+  ctx.lineTo(x + r, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function drawFiberStrip(ctx, x, y, width, height, tint = "#f2d9b6") {
+  roundedRect(ctx, x, y, width, height, 12);
+  ctx.fillStyle = "#fff4df";
+  ctx.fill();
+  ctx.save();
+  ctx.clip();
+  for (let px = x + 6; px < x + width; px += 15) {
+    ctx.fillStyle = tint;
+    ctx.fillRect(px, y, 6, height);
+  }
+  ctx.restore();
+}
+
+function drawArrowFlow(ctx, points, progress, color = "rgba(31, 182, 216, .72)") {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 8;
+  ctx.lineCap = "round";
+  ctx.setLineDash([18, 18]);
+  ctx.lineDashOffset = -progress * 42;
+  ctx.beginPath();
+  points.forEach(([x, y], index) => {
+    if (index === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawApplicationBackground(ctx, width, height) {
+  const gradient = ctx.createLinearGradient(0, 0, 0, height);
+  gradient.addColorStop(0, "#e9fbff");
+  gradient.addColorStop(.62, "#fffdf7");
+  gradient.addColorStop(1, "#fff0f3");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+}
+
+function drawTowelScene(ctx, width, height, t) {
+  drawApplicationBackground(ctx, width, height);
+  const pulse = (Math.sin(t * 2.2) + 1) / 2;
+  ctx.fillStyle = "rgba(227, 75, 95, .78)";
+  ctx.beginPath();
+  ctx.ellipse(width * .5, height * .82, width * (.33 + pulse * .04), height * .075, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.save();
+  ctx.translate(width * .5, height * .48);
+  ctx.rotate(-0.1);
+  drawFiberStrip(ctx, -width * .22, -height * .24, width * .44, height * .46);
+  ctx.restore();
+  drawArrowFlow(ctx, [[width * .36, height * .77], [width * .39, height * .64], [width * .42, height * .48], [width * .46, height * .32]], t);
+  drawArrowFlow(ctx, [[width * .55, height * .78], [width * .55, height * .62], [width * .56, height * .45], [width * .57, height * .30]], t + .3);
+}
+
+function drawPlantScene(ctx, width, height, t) {
+  drawApplicationBackground(ctx, width, height);
+  ctx.fillStyle = "#c99b63";
+  ctx.fillRect(0, height * .72, width, height * .28);
+  ctx.fillStyle = "#58bf7a";
+  ctx.fillRect(width * .49, height * .25, width * .045, height * .5);
+  ctx.beginPath();
+  ctx.ellipse(width * .39, height * .36, width * .13, height * .07, -0.4, 0, Math.PI * 2);
+  ctx.ellipse(width * .62, height * .31, width * .14, height * .075, 0.4, 0, Math.PI * 2);
+  ctx.ellipse(width * .61, height * .48, width * .12, height * .065, 0.2, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "#57c7df";
+  ctx.fillRect(0, height * .88, width, height * .12);
+  drawArrowFlow(ctx, [[width * .51, height * .86], [width * .51, height * .68], [width * .51, height * .5], [width * .51, height * .25]], t);
+}
+
+function drawPaperScene(ctx, width, height, t) {
+  drawApplicationBackground(ctx, width, height);
+  drawFiberStrip(ctx, width * .18, height * .16, width * .64, height * .68, "#f0d0a7");
+  const radius = width * (.06 + ((Math.sin(t * 1.7) + 1) / 2) * .09);
+  const glow = ctx.createRadialGradient(width * .5, height * .5, 10, width * .5, height * .5, radius * 2.4);
+  glow.addColorStop(0, "rgba(227,75,95,.92)");
+  glow.addColorStop(.55, "rgba(227,75,95,.36)");
+  glow.addColorStop(1, "rgba(227,75,95,0)");
+  ctx.fillStyle = glow;
+  ctx.beginPath();
+  ctx.arc(width * .5, height * .5, radius * 2.4, 0, Math.PI * 2);
+  ctx.fill();
+  drawArrowFlow(ctx, [[width * .5, height * .5], [width * .33, height * .36]], t);
+  drawArrowFlow(ctx, [[width * .5, height * .5], [width * .68, height * .38]], t + .2);
+  drawArrowFlow(ctx, [[width * .5, height * .5], [width * .52, height * .74]], t + .4);
+}
+
+function drawWickScene(ctx, width, height, t) {
+  drawApplicationBackground(ctx, width, height);
+  ctx.fillStyle = "rgba(227,75,95,.55)";
+  ctx.beginPath();
+  ctx.ellipse(width * .5, height * .78, width * .23, height * .07, 0, 0, Math.PI * 2);
+  ctx.fill();
+  drawFiberStrip(ctx, width * .46, height * .34, width * .08, height * .42, "#d7a966");
+  const flame = 1 + Math.sin(t * 7) * .08;
+  const flameGradient = ctx.createLinearGradient(0, height * .12, 0, height * .34);
+  flameGradient.addColorStop(0, "#ffd166");
+  flameGradient.addColorStop(1, "#e34b5f");
+  ctx.fillStyle = flameGradient;
+  ctx.beginPath();
+  ctx.ellipse(width * .5, height * .24, width * .055 * flame, height * .12 * flame, 0, 0, Math.PI * 2);
+  ctx.fill();
+  drawArrowFlow(ctx, [[width * .5, height * .76], [width * .5, height * .6], [width * .5, height * .42], [width * .5, height * .28]], t);
+}
+
+function drawSoilScene(ctx, width, height, t) {
+  drawApplicationBackground(ctx, width, height);
+  ctx.fillStyle = "#57c7df";
+  ctx.globalAlpha = .28 + ((Math.sin(t * 2) + 1) / 2) * .25;
+  ctx.fillRect(width * .15, height * .2, width * .7, height * .16);
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = "#c79962";
+  roundedRect(ctx, width * .12, height * .45, width * .76, height * .38, 26);
+  ctx.fill();
+  const rocks = [[.24,.55,.045], [.4,.66,.055], [.58,.55,.05], [.73,.68,.06], [.3,.75,.04]];
+  rocks.forEach(([rx, ry, rr]) => {
+    ctx.fillStyle = "#7c5731";
+    ctx.beginPath();
+    ctx.arc(width * rx, height * ry, width * rr, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  drawArrowFlow(ctx, [[width * .35, height * .32], [width * .35, height * .48], [width * .42, height * .72]], t);
+  drawArrowFlow(ctx, [[width * .61, height * .32], [width * .61, height * .52], [width * .56, height * .76]], t + .25);
+}
+
+function drawStrawScene(ctx, width, height, t) {
+  drawApplicationBackground(ctx, width, height);
+  ctx.fillStyle = "rgba(227,75,95,.78)";
+  roundedRect(ctx, width * .18, height * .78, width * .64, height * .12, 24);
+  ctx.fill();
+  drawFiberStrip(ctx, width * .47, height * .28, width * .07, height * .58, "#efd2aa");
+  const flowerSize = 1 + Math.sin(t * 2.4) * .05;
+  ctx.save();
+  ctx.translate(width * .505, height * .22);
+  ctx.scale(flowerSize, flowerSize);
+  for (let i = 0; i < 6; i += 1) {
+    ctx.rotate(Math.PI / 3);
+    ctx.fillStyle = "#e34b5f";
+    ctx.beginPath();
+    ctx.ellipse(0, -height * .08, width * .045, height * .075, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.fillStyle = "#ffd166";
+  ctx.beginPath();
+  ctx.arc(0, 0, width * .035, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+  drawArrowFlow(ctx, [[width * .505, height * .82], [width * .505, height * .66], [width * .505, height * .48], [width * .505, height * .25]], t);
+}
+
+function animateApplicationCanvas(timestamp) {
+  if (!applicationCtx) return;
+  const { width, height } = resizeApplicationCanvas();
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const t = reduced ? 0 : timestamp / 1000;
+  const drawers = {
+    towel: drawTowelScene,
+    plant: drawPlantScene,
+    paper: drawPaperScene,
+    wick: drawWickScene,
+    soil: drawSoilScene,
+    straw: drawStrawScene
+  };
+  drawers[activeApplication](applicationCtx, width, height, t);
+  window.requestAnimationFrame(animateApplicationCanvas);
+}
+
+if (applicationCanvas && applicationCtx) {
+  window.requestAnimationFrame(animateApplicationCanvas);
+}
 
 const presets = {
   material: {
