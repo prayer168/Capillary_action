@@ -205,7 +205,6 @@ main {
 .control-board,
 .data-entry,
 .chart-board,
-.worksheet,
 .teacher-note {
   background: rgba(255, 255, 255, .9);
   border: 1px solid var(--line);
@@ -321,8 +320,7 @@ main {
 .control-board,
 .simulation-board,
 .data-entry,
-.chart-board,
-.worksheet {
+.chart-board {
   padding: clamp(18px, 3vw, 28px);
 }
 
@@ -332,8 +330,7 @@ main {
 }
 
 .control-board label,
-.data-entry label,
-.worksheet label {
+.data-entry label {
   display: grid;
   gap: 6px;
   font-weight: 800;
@@ -556,23 +553,6 @@ legend {
   font-weight: 800;
 }
 
-.worksheet-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-textarea {
-  min-height: 118px;
-  resize: vertical;
-}
-
-.materials {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
-
 footer {
   padding: 26px 16px 42px;
   color: var(--muted);
@@ -592,8 +572,7 @@ textarea:focus-visible {
   .lab-layout,
   .data-layout,
   .mission-grid,
-  .learn-grid,
-  .worksheet-grid {
+  .learn-grid {
     grid-template-columns: 1fr;
   }
 
