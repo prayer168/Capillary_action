@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>毛細現象探究實驗室</title>
+  <meta name="description" content="國小三年級毛細現象探究與實作互動教材">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <span class="drop"></span>
+        <span class="fiber"></span>
+      </div>
+      <div>
+        <p class="eyebrow">國小三年級自然｜探究與實作</p>
+        <h1>毛細現象探究實驗室</h1>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="教材分頁">
+      <button class="tab is-active" data-tab="observe">觀察站</button>
+      <button class="tab" data-tab="missions">探究任務</button>
+      <button class="tab" data-tab="lab">互動實驗室</button>
+      <button class="tab" data-tab="data">我的圖表</button>
+      <button class="tab" data-tab="learn">原理小教室</button>
+      <button class="tab" data-tab="quiz">挑戰測驗</button>
+      <button class="tab" data-tab="worksheet">紀錄單</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="observe" class="panel is-active" tabindex="-1">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="section-kicker">從一滴紅色水開始</p>
+          <h2>紙巾碰到水，水為什麼會自己往上跑？</h2>
+          <p>把紙條一端放進紅色水裡，水會沿著紙裡的小縫縫移動。這種現象叫做毛細現象。</p>
+          <div class="hero-actions">
+            <button class="primary-action" data-jump="lab">開始操作</button>
+            <button class="secondary-action" data-jump="missions">查看任務</button>
+          </div>
+        </div>
+        <div class="capillary-stage" aria-label="紅色水沿紙條上升的動畫">
+          <div class="beaker">
+            <div class="water"></div>
+            <div class="paper-strip">
+              <div class="wick-water"></div>
+              <div class="fiber-lines"></div>
+            </div>
+          </div>
+          <div class="stage-note">水沿著紙纖維間的小空隙往上移動</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="missions" class="panel" tabindex="-1">
+      <div class="section-heading">
+        <p class="section-kicker">先預測，再觀察</p>
+        <h2>三個探究任務</h2>
+      </div>
+      <div class="mission-grid">
+        <article class="mission-card">
+          <span class="mission-number">1</span>
+          <h3>不同材質</h3>
+          <p>衛生紙和廚房紙巾，哪一種讓水移動比較多？</p>
+          <button class="small-action" data-load-preset="material">帶入任務</button>
+        </article>
+        <article class="mission-card">
+          <span class="mission-number">2</span>
+          <h3>不同層數</h3>
+          <p>一層和四層廚房紙巾，吸水量會一樣嗎？</p>
+          <button class="small-action" data-load-preset="layers">帶入任務</button>
+        </article>
+        <article class="mission-card">
+          <span class="mission-number">3</span>
+          <h3>不同寬度</h3>
+          <p>細紙條和寬紙條，水移動的量會有差別嗎？</p>
+          <button class="small-action" data-load-preset="width">帶入任務</button>
+        </article>
+      </div>
+      <div class="teacher-note">
+        <strong>投影示範建議：</strong>先讓全班舉手預測，再切到「互動實驗室」播放動畫，最後到「我的圖表」比較結果。
+      </div>
+    </section>
+
+    <section id="lab" class="panel" tabindex="-1">
+      <div class="lab-layout">
+        <form class="control-board" id="labForm">
+          <div class="section-heading compact">
+            <p class="section-kicker">互動實驗室</p>
+            <h2>選條件，看水怎麼移動</h2>
+          </div>
+          <label>
+            紙材
+            <select id="paperType">
+              <option value="kitchen">廚房紙巾</option>
+              <option value="tissue">衛生紙</option>
+            </select>
+          </label>
+          <label>
+            層數
+            <input id="paperLayers" type="range" min="1" max="4" step="1" value="4">
+            <span class="range-value"><output id="layerOut">4</output> 層</span>
+          </label>
+          <label>
+            紙條寬度
+            <select id="paperWidth">
+              <option value="narrow">細</option>
+              <option value="medium">中</option>
+              <option value="wide">寬</option>
+            </select>
+          </label>
+          <label>
+            觀察時間
+            <input id="observeTime" type="range" min="5" max="30" step="5" value="30">
+            <span class="range-value"><output id="timeOut">30</output> 分鐘</span>
+          </label>
+          <fieldset>
+            <legend>我預測</legend>
+            <label class="radio-line"><input type="radio" name="prediction" value="多" checked> 水會移動很多</label>
+            <label class="radio-line"><input type="radio" name="prediction" value="少"> 水會移動較少</label>
+          </fieldset>
+          <button class="primary-action" type="submit">開始觀察</button>
+        </form>
+
+        <div class="simulation-board">
+          <div class="cup-row">
+            <div class="sim-cup">
+              <div class="sim-water"></div>
+              <div class="sim-paper" id="simPaper">
+                <div class="sim-wick" id="simWick"></div>
+              </div>
+            </div>
+            <div class="measuring-cylinder" aria-label="量筒顯示預估水量">
+              <div class="cylinder-fill" id="cylinderFill"></div>
+              <span id="cylinderText">40 mL</span>
+            </div>
+          </div>
+          <div class="result-box" id="labResult">
+            選好條件後按下「開始觀察」，看看紅色水移動多少。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="data" class="panel" tabindex="-1">
+      <div class="data-layout">
+        <div class="data-entry">
+          <div class="section-heading compact">
+            <p class="section-kicker">輸入自己的實驗數據</p>
+            <h2>我的數據圖表</h2>
+          </div>
+          <div class="input-grid" id="dataInputs"></div>
+          <div class="data-actions">
+            <button class="secondary-action" id="resetData" type="button">恢復影片數據</button>
+            <button class="primary-action" id="printPage" type="button">列印紀錄</button>
+          </div>
+        </div>
+        <div class="chart-board">
+          <canvas id="barChart" width="720" height="420" aria-label="吸水量長條圖"></canvas>
+          <p class="conclusion" id="conclusion"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="learn" class="panel" tabindex="-1">
+      <div class="section-heading">
+        <p class="section-kicker">三年級版原理解釋</p>
+        <h2>水不是自己有腳，是被小縫縫拉著走</h2>
+      </div>
+      <div class="learn-grid">
+        <article>
+          <h3>紙裡有很多細小空隙</h3>
+          <p>紙是由許多纖維組成的，纖維和纖維之間有很小的空隙。</p>
+        </article>
+        <article>
+          <h3>水會貼著纖維移動</h3>
+          <p>水碰到紙纖維時，會沿著空隙慢慢往上或往旁邊移動。</p>
+        </article>
+        <article>
+          <h3>條件不同，結果不同</h3>
+          <p>紙材、層數、寬度不同，能讓水移動的量也可能不同。</p>
+        </article>
+      </div>
+      <div class="fiber-demo" aria-label="紙纖維與水滴示意圖">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </section>
+
+    <section id="quiz" class="panel" tabindex="-1">
+      <div class="section-heading">
+        <p class="section-kicker">即時回饋</p>
+        <h2>挑戰測驗</h2>
+      </div>
+      <div id="quizList" class="quiz-list"></div>
+      <div class="score-box" id="scoreBox">完成作答後會看到分數。</div>
+      <button class="secondary-action" id="retryQuiz" type="button">重新作答</button>
+    </section>
+
+    <section id="worksheet" class="panel" tabindex="-1">
+      <div class="worksheet">
+        <div class="section-heading compact">
+          <p class="section-kicker">實作紀錄單</p>
+          <h2>我會觀察，也會記錄</h2>
+        </div>
+        <div class="worksheet-grid">
+          <label>我的預測<textarea placeholder="我覺得......因為......"></textarea></label>
+          <label>我看到的結果<textarea placeholder="水移動最多的是......"></textarea></label>
+          <label>我想到的原因<textarea placeholder="可能是因為......"></textarea></label>
+          <label>生活中的毛細現象<textarea placeholder="例如：抹布吸水、植物吸水......"></textarea></label>
+        </div>
+        <div class="materials">
+          <h3>器材清單</h3>
+          <p>透明塑膠杯、燒杯、量筒、鑷子、紅色色素、剪刀、衛生紙、廚房紙巾、水盤。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>毛細現象探究實驗室｜資料依據：教學影片逐字稿與課堂實作數據</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

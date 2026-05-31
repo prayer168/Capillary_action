@@ -1,0 +1,669 @@
+:root {
+  --ink: #17323a;
+  --muted: #5d7075;
+  --paper: #fffdf7;
+  --card: #ffffff;
+  --line: #d8e7e4;
+  --water: #1fb6d8;
+  --deep-water: #117ea1;
+  --leaf: #3caa72;
+  --sun: #ffd166;
+  --red-water: #e34b5f;
+  --rose: #ffe6ea;
+  --shadow: 0 16px 42px rgba(20, 70, 84, .14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", system-ui, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 209, 102, .35), transparent 24rem),
+    linear-gradient(180deg, #e7fbff 0%, #fffdf7 38%, #f3fff8 100%);
+  line-height: 1.65;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 253, 247, .93);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+  padding: 14px clamp(16px, 4vw, 48px) 10px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 1180px;
+  margin: 0 auto 12px;
+}
+
+.brand-mark {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: linear-gradient(160deg, #dff9ff, #fff 52%, #ffe5eb);
+  box-shadow: inset 0 0 0 2px #cfeeed;
+}
+
+.drop {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  width: 20px;
+  height: 28px;
+  background: var(--water);
+  border-radius: 50% 50% 55% 55%;
+  transform: rotate(35deg);
+}
+
+.fiber {
+  position: absolute;
+  right: 13px;
+  bottom: 9px;
+  width: 12px;
+  height: 38px;
+  border-radius: 8px;
+  background: repeating-linear-gradient(90deg, #f7ead6 0 3px, #ead0ad 3px 6px);
+}
+
+.eyebrow,
+.section-kicker {
+  margin: 0;
+  color: var(--deep-water);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(1.35rem, 3vw, 2.15rem);
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: clamp(1.65rem, 4vw, 3rem);
+  line-height: 1.18;
+  margin-bottom: 14px;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  max-width: 1180px;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.tab,
+.primary-action,
+.secondary-action,
+.small-action {
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.tab {
+  flex: 0 0 auto;
+  padding: 10px 15px;
+  color: var(--ink);
+  background: #eaf8f8;
+}
+
+.tab.is-active {
+  color: white;
+  background: var(--deep-water);
+}
+
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(18px, 5vw, 52px) clamp(16px, 4vw, 48px) 42px;
+}
+
+.panel {
+  display: none;
+}
+
+.panel.is-active {
+  display: block;
+}
+
+.hero-grid,
+.lab-layout,
+.data-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, .95fr);
+  gap: clamp(20px, 4vw, 42px);
+  align-items: center;
+}
+
+.hero-copy p:not(.section-kicker) {
+  font-size: 1.2rem;
+  max-width: 34rem;
+}
+
+.hero-actions,
+.data-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.primary-action,
+.secondary-action,
+.small-action {
+  min-height: 46px;
+  padding: 10px 20px;
+}
+
+.primary-action {
+  color: white;
+  background: var(--red-water);
+  box-shadow: 0 10px 22px rgba(227, 75, 95, .24);
+}
+
+.secondary-action,
+.small-action {
+  color: var(--ink);
+  background: #ddf5f7;
+}
+
+.capillary-stage,
+.simulation-board,
+.control-board,
+.data-entry,
+.chart-board,
+.worksheet,
+.teacher-note {
+  background: rgba(255, 255, 255, .9);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.capillary-stage {
+  min-height: 430px;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+}
+
+.beaker {
+  position: relative;
+  width: min(88%, 360px);
+  height: 300px;
+  border: 8px solid rgba(75, 145, 161, .35);
+  border-top: 0;
+  border-radius: 0 0 38px 38px;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(255,255,255,.62), rgba(255,255,255,.18));
+}
+
+.water {
+  position: absolute;
+  inset: auto 0 0;
+  height: 86px;
+  background: linear-gradient(180deg, rgba(232,78,96,.7), var(--red-water));
+}
+
+.paper-strip {
+  position: absolute;
+  left: 50%;
+  bottom: 38px;
+  transform: translateX(-50%);
+  width: 78px;
+  height: 260px;
+  border-radius: 8px 8px 0 0;
+  background: repeating-linear-gradient(90deg, #fff4df 0 7px, #efd6b3 7px 12px);
+  overflow: hidden;
+}
+
+.wick-water {
+  position: absolute;
+  inset: auto 0 0;
+  height: 24%;
+  background: linear-gradient(180deg, rgba(227,75,95,.1), rgba(227,75,95,.72));
+  animation: wickRise 4.8s ease-in-out infinite;
+}
+
+.fiber-lines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0 18%, rgba(139,105,65,.18) 18% 19%, transparent 19% 35%);
+}
+
+.stage-note {
+  margin-top: 18px;
+  font-weight: 800;
+  color: var(--deep-water);
+  text-align: center;
+}
+
+@keyframes wickRise {
+  0%, 100% { height: 26%; }
+  50% { height: 78%; }
+}
+
+.section-heading {
+  margin-bottom: 22px;
+}
+
+.section-heading.compact {
+  margin-bottom: 16px;
+}
+
+.mission-grid,
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.mission-card,
+.learn-grid article {
+  min-height: 230px;
+  padding: 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.mission-number {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  color: white;
+  background: var(--leaf);
+  font-weight: 900;
+}
+
+.teacher-note {
+  margin-top: 18px;
+  padding: 18px 20px;
+}
+
+.control-board,
+.simulation-board,
+.data-entry,
+.chart-board,
+.worksheet {
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.control-board {
+  display: grid;
+  gap: 16px;
+}
+
+.control-board label,
+.data-entry label,
+.worksheet label {
+  display: grid;
+  gap: 6px;
+  font-weight: 800;
+}
+
+select,
+input[type="number"],
+textarea {
+  width: 100%;
+  border: 2px solid #cde5e3;
+  border-radius: 8px;
+  padding: 11px 12px;
+  background: white;
+  color: var(--ink);
+}
+
+input[type="range"] {
+  accent-color: var(--red-water);
+}
+
+.range-value {
+  color: var(--deep-water);
+  font-weight: 900;
+}
+
+fieldset {
+  border: 2px dashed #cde5e3;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+legend {
+  font-weight: 900;
+  color: var(--deep-water);
+}
+
+.radio-line {
+  display: flex !important;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 8px !important;
+}
+
+.cup-row {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) 130px;
+  gap: 22px;
+  align-items: end;
+  min-height: 350px;
+}
+
+.sim-cup {
+  position: relative;
+  height: 300px;
+  border: 7px solid rgba(75, 145, 161, .35);
+  border-top: 0;
+  border-radius: 0 0 30px 30px;
+  overflow: hidden;
+}
+
+.sim-water {
+  position: absolute;
+  inset: auto 0 0;
+  height: 78px;
+  background: var(--red-water);
+}
+
+.sim-paper {
+  position: absolute;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 248px;
+  border-radius: 8px 8px 0 0;
+  background: repeating-linear-gradient(90deg, #fff3dc 0 6px, #efd2aa 6px 10px);
+  overflow: hidden;
+  transition: width .25s ease, opacity .25s ease;
+}
+
+.sim-wick {
+  position: absolute;
+  inset: auto 0 0;
+  height: 18%;
+  background: linear-gradient(180deg, rgba(227,75,95,.06), rgba(227,75,95,.75));
+  transition: height 1.2s ease;
+}
+
+.measuring-cylinder {
+  position: relative;
+  height: 250px;
+  border: 5px solid rgba(75, 145, 161, .35);
+  border-top: 0;
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,.8);
+}
+
+.cylinder-fill {
+  position: absolute;
+  inset: auto 0 0;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(227,75,95,.3), var(--red-water));
+  transition: height .8s ease;
+}
+
+.measuring-cylinder span {
+  position: absolute;
+  inset: 16px 0 auto;
+  text-align: center;
+  font-weight: 900;
+}
+
+.result-box,
+.conclusion,
+.score-box {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f0fbfb;
+  font-weight: 800;
+}
+
+.data-layout {
+  align-items: start;
+}
+
+.input-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.chart-board canvas {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  background: #fffdfa;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.fiber-demo {
+  position: relative;
+  min-height: 180px;
+  margin-top: 20px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.fiber-demo span {
+  position: absolute;
+  width: 6px;
+  height: 150px;
+  top: 18px;
+  border-radius: 999px;
+  background: #d9ba8e;
+}
+
+.fiber-demo span:nth-child(1) { left: 18%; transform: rotate(-15deg); }
+.fiber-demo span:nth-child(2) { left: 32%; transform: rotate(8deg); }
+.fiber-demo span:nth-child(3) { left: 49%; transform: rotate(-4deg); }
+.fiber-demo span:nth-child(4) { left: 64%; transform: rotate(12deg); }
+.fiber-demo span:nth-child(5) { left: 78%; transform: rotate(-10deg); }
+
+.fiber-demo::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  bottom: 22px;
+  width: 80%;
+  height: 42px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(227,75,95,.2), rgba(227,75,95,.75), rgba(227,75,95,.2));
+}
+
+.quiz-list {
+  display: grid;
+  gap: 14px;
+}
+
+.quiz-card {
+  padding: 18px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.quiz-options {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.quiz-options button {
+  min-height: 44px;
+  border: 2px solid #cde5e3;
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  padding: 8px 12px;
+}
+
+.quiz-options button.correct {
+  border-color: var(--leaf);
+  background: #e8fbf1;
+}
+
+.quiz-options button.wrong {
+  border-color: var(--red-water);
+  background: var(--rose);
+}
+
+.feedback {
+  margin-top: 10px;
+  font-weight: 800;
+}
+
+.worksheet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+textarea {
+  min-height: 118px;
+  resize: vertical;
+}
+
+.materials {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+footer {
+  padding: 26px 16px 42px;
+  color: var(--muted);
+  text-align: center;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 4px solid rgba(31, 182, 216, .35);
+  outline-offset: 2px;
+}
+
+@media (max-width: 860px) {
+  .hero-grid,
+  .lab-layout,
+  .data-layout,
+  .mission-grid,
+  .learn-grid,
+  .worksheet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .capillary-stage {
+    min-height: 350px;
+  }
+
+  .cup-row {
+    grid-template-columns: 1fr;
+  }
+
+  .measuring-cylinder {
+    width: 130px;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand {
+    align-items: flex-start;
+  }
+
+  .brand-mark {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 auto;
+  }
+
+  .tab {
+    padding: 9px 12px;
+    font-size: .95rem;
+  }
+
+  .hero-actions,
+  .data-actions {
+    display: grid;
+  }
+
+  .primary-action,
+  .secondary-action,
+  .small-action {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .site-header,
+  .hero-actions,
+  .data-actions,
+  footer {
+    display: none;
+  }
+
+  body {
+    background: white;
+  }
+
+  .panel {
+    display: block;
+    break-inside: avoid;
+    margin-bottom: 24px;
+  }
+}
