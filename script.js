@@ -6,6 +6,9 @@ function showTab(id) {
   panels.forEach((panel) => panel.classList.toggle("is-active", panel.id === id));
   document.getElementById(id)?.focus({ preventScroll: true });
   window.scrollTo({ top: 0, behavior: "smooth" });
+  if (id === "learn") {
+    window.setTimeout(() => renderLearnCanvases(performance.now()), 60);
+  }
 }
 
 tabs.forEach((tab) => tab.addEventListener("click", () => showTab(tab.dataset.tab)));
@@ -66,6 +69,9 @@ const applicationThink = document.getElementById("applicationThink");
 const applicationCanvas = document.getElementById("applicationCanvas");
 const applicationCtx = applicationCanvas?.getContext("2d");
 let activeApplication = "towel";
+const scheduleFrame = window.requestAnimationFrame
+  ? window.requestAnimationFrame.bind(window)
+  : (callback) => window.setTimeout(() => callback(Date.now()), 33);
 
 document.querySelectorAll(".application-choice").forEach((button) => {
   button.addEventListener("click", () => {
@@ -277,11 +283,11 @@ function animateApplicationCanvas(timestamp) {
     straw: drawStrawScene
   };
   drawers[activeApplication](applicationCtx, width, height, t);
-  window.requestAnimationFrame(animateApplicationCanvas);
+  scheduleFrame(animateApplicationCanvas);
 }
 
 if (applicationCanvas && applicationCtx) {
-  window.requestAnimationFrame(animateApplicationCanvas);
+  scheduleFrame(animateApplicationCanvas);
 }
 
 const learnCanvases = [...document.querySelectorAll("[data-learn-canvas]")].map((canvas) => ({
@@ -373,7 +379,7 @@ function drawLearnCompare(ctx, width, height, t) {
   });
 }
 
-function animateLearnCanvases(timestamp) {
+function renderLearnCanvases(timestamp = 0) {
   if (!learnCanvases.length) return;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const t = reduced ? 0 : timestamp / 1000;
@@ -383,14 +389,21 @@ function animateLearnCanvases(timestamp) {
     compare: drawLearnCompare
   };
   learnCanvases.forEach(({ canvas, ctx, type }) => {
+    if (!ctx) return;
     const { width, height } = resizeCanvasToDisplay(canvas, ctx);
     drawers[type](ctx, width, height, t);
   });
-  window.requestAnimationFrame(animateLearnCanvases);
+}
+
+function animateLearnCanvases(timestamp) {
+  renderLearnCanvases(timestamp);
+  scheduleFrame(animateLearnCanvases);
 }
 
 if (learnCanvases.length) {
-  window.requestAnimationFrame(animateLearnCanvases);
+  renderLearnCanvases(0);
+  scheduleFrame(animateLearnCanvases);
+  window.addEventListener("resize", () => renderLearnCanvases(performance.now()));
 }
 
 const presets = {
