@@ -284,6 +284,115 @@ if (applicationCanvas && applicationCtx) {
   window.requestAnimationFrame(animateApplicationCanvas);
 }
 
+const learnCanvases = [...document.querySelectorAll("[data-learn-canvas]")].map((canvas) => ({
+  canvas,
+  type: canvas.dataset.learnCanvas,
+  ctx: canvas.getContext("2d")
+}));
+
+function resizeCanvasToDisplay(canvas, ctx, minWidth = 240, minHeight = 150) {
+  const rect = canvas.getBoundingClientRect();
+  const scale = Math.min(window.devicePixelRatio || 1, 2);
+  const width = Math.max(minWidth, Math.round(rect.width));
+  const height = Math.max(minHeight, Math.round(rect.height));
+  const pixelWidth = Math.round(width * scale);
+  const pixelHeight = Math.round(height * scale);
+  if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+    canvas.width = pixelWidth;
+    canvas.height = pixelHeight;
+  }
+  ctx.setTransform(scale, 0, 0, scale, 0, 0);
+  return { width, height };
+}
+
+function drawLearnBackground(ctx, width, height) {
+  const gradient = ctx.createLinearGradient(0, 0, width, height);
+  gradient.addColorStop(0, "#e9fbff");
+  gradient.addColorStop(.55, "#fffdf7");
+  gradient.addColorStop(1, "#ffe8ed");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+}
+
+function drawLearnFibers(ctx, width, height, t) {
+  drawLearnBackground(ctx, width, height);
+  for (let i = 0; i < 7; i += 1) {
+    const x = width * (.14 + i * .12);
+    const wave = Math.sin(t * 1.6 + i) * width * .012;
+    ctx.strokeStyle = i % 2 ? "#d7a966" : "#e9cda3";
+    ctx.lineWidth = 9;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(x + wave, height * .18);
+    ctx.bezierCurveTo(x - width * .04, height * .38, x + width * .05, height * .58, x - wave, height * .84);
+    ctx.stroke();
+  }
+  ctx.fillStyle = "rgba(31, 182, 216, .78)";
+  for (let i = 0; i < 5; i += 1) {
+    const y = height * (.3 + i * .1);
+    ctx.beginPath();
+    ctx.arc(width * (.22 + i * .13), y, 8 + Math.sin(t * 2 + i) * 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawLearnFlow(ctx, width, height, t) {
+  drawLearnBackground(ctx, width, height);
+  drawFiberStrip(ctx, width * .42, height * .12, width * .16, height * .76, "#e5c79a");
+  ctx.fillStyle = "rgba(227,75,95,.75)";
+  ctx.beginPath();
+  ctx.ellipse(width * .5, height * .82, width * .28, height * .08, 0, 0, Math.PI * 2);
+  ctx.fill();
+  drawArrowFlow(ctx, [[width * .5, height * .82], [width * .5, height * .66], [width * .5, height * .48], [width * .5, height * .22]], t);
+  const dropY = height * (.78 - ((t * .18) % .52));
+  ctx.fillStyle = "#e34b5f";
+  ctx.beginPath();
+  ctx.arc(width * .5, dropY, 9, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawLearnCompare(ctx, width, height, t) {
+  drawLearnBackground(ctx, width, height);
+  const bars = [
+    { x: .2, h: .36, label: "細" },
+    { x: .42, h: .56, label: "中" },
+    { x: .64, h: .78, label: "寬" }
+  ];
+  bars.forEach((bar, index) => {
+    const barWidth = width * .12;
+    const x = width * bar.x;
+    const y = height * .82 - height * bar.h;
+    drawFiberStrip(ctx, x, height * .12, barWidth, height * .7, "#efd2aa");
+    ctx.fillStyle = "rgba(227,75,95,.72)";
+    const animatedH = height * (bar.h * (.78 + Math.sin(t * 1.8 + index) * .04));
+    ctx.fillRect(x, height * .82 - animatedH, barWidth, animatedH);
+    ctx.fillStyle = "#17323a";
+    ctx.font = "700 16px 'Noto Sans TC', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(bar.label, x + barWidth / 2, height * .93);
+  });
+}
+
+function animateLearnCanvases(timestamp) {
+  if (!learnCanvases.length) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const t = reduced ? 0 : timestamp / 1000;
+  const drawers = {
+    gaps: drawLearnFibers,
+    flow: drawLearnFlow,
+    compare: drawLearnCompare
+  };
+  learnCanvases.forEach(({ canvas, ctx, type }) => {
+    const { width, height } = resizeCanvasToDisplay(canvas, ctx);
+    drawers[type](ctx, width, height, t);
+  });
+  window.requestAnimationFrame(animateLearnCanvases);
+}
+
+if (learnCanvases.length) {
+  window.requestAnimationFrame(animateLearnCanvases);
+}
+
 const presets = {
   material: {
     paperLayers: 4,

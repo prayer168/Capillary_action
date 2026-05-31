@@ -300,6 +300,16 @@ main {
   box-shadow: var(--shadow);
 }
 
+.learn-canvas {
+  display: block;
+  width: 100%;
+  height: 170px;
+  margin-bottom: 16px;
+  border: 1px solid #cde5e3;
+  border-radius: 8px;
+  background: #fffdfa;
+}
+
 .mission-number {
   display: grid;
   place-items: center;
@@ -483,42 +493,6 @@ legend {
   background: #fffdfa;
   border: 1px solid var(--line);
   border-radius: 8px;
-}
-
-.fiber-demo {
-  position: relative;
-  min-height: 180px;
-  margin-top: 20px;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid var(--line);
-  overflow: hidden;
-}
-
-.fiber-demo span {
-  position: absolute;
-  width: 6px;
-  height: 150px;
-  top: 18px;
-  border-radius: 999px;
-  background: #d9ba8e;
-}
-
-.fiber-demo span:nth-child(1) { left: 18%; transform: rotate(-15deg); }
-.fiber-demo span:nth-child(2) { left: 32%; transform: rotate(8deg); }
-.fiber-demo span:nth-child(3) { left: 49%; transform: rotate(-4deg); }
-.fiber-demo span:nth-child(4) { left: 64%; transform: rotate(12deg); }
-.fiber-demo span:nth-child(5) { left: 78%; transform: rotate(-10deg); }
-
-.fiber-demo::after {
-  content: "";
-  position: absolute;
-  left: 10%;
-  bottom: 22px;
-  width: 80%;
-  height: 42px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(227,75,95,.2), rgba(227,75,95,.75), rgba(227,75,95,.2));
 }
 
 .application-explorer {
