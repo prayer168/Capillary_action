@@ -284,14 +284,16 @@ main {
 }
 
 .mission-grid,
-.learn-grid {
+.learn-grid,
+.application-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
 .mission-card,
-.learn-grid article {
+.learn-grid article,
+.application-card {
   min-height: 230px;
   padding: 22px;
   background: var(--card);
@@ -521,6 +523,32 @@ legend {
   background: linear-gradient(90deg, rgba(227,75,95,.2), rgba(227,75,95,.75), rgba(227,75,95,.2));
 }
 
+.application-card {
+  display: grid;
+  align-content: start;
+}
+
+.application-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(145deg, var(--water), var(--leaf));
+  font-weight: 900;
+}
+
+.application-prompt {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border: 2px dashed #bee7e7;
+  border-radius: 8px;
+  background: #fffdf7;
+  font-weight: 900;
+}
+
 .quiz-list {
   display: grid;
   gap: 14px;
@@ -579,7 +607,8 @@ textarea:focus-visible {
   .lab-layout,
   .data-layout,
   .mission-grid,
-  .learn-grid {
+  .learn-grid,
+  .application-grid {
     grid-template-columns: 1fr;
   }
 
