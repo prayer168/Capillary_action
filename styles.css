@@ -553,12 +553,6 @@ legend {
   font-weight: 800;
 }
 
-footer {
-  padding: 26px 16px 42px;
-  color: var(--muted);
-  text-align: center;
-}
-
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
@@ -632,10 +626,6 @@ textarea:focus-visible {
   .site-header,
   .hero-actions,
   .data-actions,
-  footer {
-    display: none;
-  }
-
   body {
     background: white;
   }
