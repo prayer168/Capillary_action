@@ -93,13 +93,9 @@
             <p class="section-kicker">互動實驗室</p>
             <h2>選條件，看水怎麼移動</h2>
           </div>
-          <label>
-            紙材
-            <select id="paperType">
-              <option value="kitchen">廚房紙巾</option>
-              <option value="tissue">衛生紙</option>
-            </select>
-          </label>
+          <div class="compare-note">
+            同時比較：衛生紙 vs 廚房紙巾
+          </div>
           <label>
             層數
             <input id="paperLayers" type="range" min="1" max="4" step="1" value="4">
@@ -107,11 +103,13 @@
           </label>
           <label>
             紙條寬度
-            <select id="paperWidth">
-              <option value="narrow">細</option>
-              <option value="medium">中</option>
-              <option value="wide">寬</option>
-            </select>
+            <input id="paperWidth" type="range" min="1" max="3" step="1" value="2">
+            <span class="range-value"><output id="widthOut">中</output></span>
+          </label>
+          <label>
+            紙條長度
+            <input id="paperLength" type="range" min="20" max="60" step="5" value="50">
+            <span class="range-value"><output id="lengthOut">50</output> cm</span>
           </label>
           <label>
             觀察時間
@@ -120,27 +118,37 @@
           </label>
           <fieldset>
             <legend>我預測</legend>
-            <label class="radio-line"><input type="radio" name="prediction" value="多" checked> 水會移動很多</label>
-            <label class="radio-line"><input type="radio" name="prediction" value="少"> 水會移動較少</label>
+            <label class="radio-line"><input type="radio" name="prediction" value="廚房紙巾較遠" checked> 廚房紙巾會比較遠</label>
+            <label class="radio-line"><input type="radio" name="prediction" value="衛生紙較遠"> 衛生紙會比較遠</label>
           </fieldset>
           <button class="primary-action" type="submit">開始觀察</button>
         </form>
 
         <div class="simulation-board">
-          <div class="cup-row">
-            <div class="sim-cup">
-              <div class="sim-water"></div>
-              <div class="sim-paper" id="simPaper">
-                <div class="sim-wick" id="simWick"></div>
+          <div class="compare-row">
+            <article class="sample-card">
+              <h3>衛生紙</h3>
+              <div class="sim-cup">
+                <div class="sim-water"></div>
+                <div class="sim-paper tissue-paper" id="tissuePaper">
+                  <div class="sim-wick" id="tissueWick"></div>
+                </div>
               </div>
-            </div>
-            <div class="measuring-cylinder" aria-label="刻度尺顯示預估水移動距離">
-              <div class="cylinder-fill" id="cylinderFill"></div>
-              <span id="cylinderText">40 cm</span>
-            </div>
+              <p class="distance-badge" id="tissueText">27 cm</p>
+            </article>
+            <article class="sample-card">
+              <h3>廚房紙巾</h3>
+              <div class="sim-cup">
+                <div class="sim-water"></div>
+                <div class="sim-paper kitchen-paper" id="kitchenPaper">
+                  <div class="sim-wick" id="kitchenWick"></div>
+                </div>
+              </div>
+              <p class="distance-badge" id="kitchenText">58 cm</p>
+            </article>
           </div>
           <div class="result-box" id="labResult">
-            選好條件後按下「開始觀察」，看看紅色水移動多少。
+            調整條件後按下「開始觀察」，比較兩種紙讓紅色水移動的距離。
           </div>
         </div>
       </div>

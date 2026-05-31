@@ -15,83 +15,101 @@ document.querySelectorAll("[data-jump]").forEach((button) => {
 
 const presets = {
   material: {
-    paperType: "kitchen",
     paperLayers: 4,
-    paperWidth: "medium",
+    paperWidth: 2,
+    paperLength: 50,
     result: "影片任務一：衛生紙 15 cm，廚房紙巾 52 cm。"
   },
   layers: {
-    paperType: "kitchen",
     paperLayers: 4,
-    paperWidth: "medium",
+    paperWidth: 2,
+    paperLength: 40,
     result: "影片任務二：一層廚房紙巾 10 cm，四層廚房紙巾 40 cm。"
   },
   width: {
-    paperType: "kitchen",
     paperLayers: 1,
-    paperWidth: "wide",
+    paperWidth: 3,
+    paperLength: 30,
     result: "影片任務三：細紙條 11 cm，寬紙條 15 cm。"
   }
 };
 
-const paperType = document.getElementById("paperType");
 const paperLayers = document.getElementById("paperLayers");
 const paperWidth = document.getElementById("paperWidth");
+const paperLength = document.getElementById("paperLength");
 const observeTime = document.getElementById("observeTime");
 const layerOut = document.getElementById("layerOut");
+const widthOut = document.getElementById("widthOut");
+const lengthOut = document.getElementById("lengthOut");
 const timeOut = document.getElementById("timeOut");
-const simPaper = document.getElementById("simPaper");
-const simWick = document.getElementById("simWick");
-const cylinderFill = document.getElementById("cylinderFill");
-const cylinderText = document.getElementById("cylinderText");
+const tissuePaper = document.getElementById("tissuePaper");
+const kitchenPaper = document.getElementById("kitchenPaper");
+const tissueWick = document.getElementById("tissueWick");
+const kitchenWick = document.getElementById("kitchenWick");
+const tissueText = document.getElementById("tissueText");
+const kitchenText = document.getElementById("kitchenText");
 const labResult = document.getElementById("labResult");
 
-function estimateCm() {
-  const materialBase = paperType.value === "kitchen" ? 18 : 7;
-  const layerBoost = Number(paperLayers.value) * (paperType.value === "kitchen" ? 8 : 3);
-  const widthBoost = { narrow: 3, medium: 8, wide: 13 }[paperWidth.value];
+function estimateCm(material) {
+  const materialBase = material === "kitchen" ? 18 : 7;
+  const layerBoost = Number(paperLayers.value) * (material === "kitchen" ? 8 : 3);
+  const widthBoost = Number(paperWidth.value) * 4;
+  const lengthFactor = Number(paperLength.value) / 50;
   const timeFactor = Number(observeTime.value) / 30;
-  return Math.round((materialBase + layerBoost + widthBoost) * timeFactor);
+  return Math.round((materialBase + layerBoost + widthBoost) * lengthFactor * timeFactor);
 }
 
 function updateLabVisual(animate = false) {
   layerOut.value = paperLayers.value;
+  widthOut.value = { 1: "細", 2: "中", 3: "寬" }[paperWidth.value];
+  lengthOut.value = paperLength.value;
   timeOut.value = observeTime.value;
-  const widthMap = { narrow: 42, medium: 64, wide: 92 };
-  const cm = Math.min(60, estimateCm());
-  simPaper.style.width = `${widthMap[paperWidth.value]}px`;
-  simPaper.style.opacity = paperType.value === "kitchen" ? "1" : ".72";
+  const widthMap = { 1: 42, 2: 64, 3: 92 };
+  const height = Math.max(170, Math.min(270, Number(paperLength.value) * 4.5));
+  const tissueCm = Math.min(60, estimateCm("tissue"));
+  const kitchenCm = Math.min(60, estimateCm("kitchen"));
+  [tissuePaper, kitchenPaper].forEach((paper) => {
+    paper.style.width = `${widthMap[paperWidth.value]}px`;
+    paper.style.height = `${height}px`;
+  });
+  const setWick = (wick, cm) => {
+    wick.style.height = `${Math.max(18, Math.min(88, cm * 1.45))}%`;
+  };
   if (animate) {
-    simWick.style.height = "18%";
+    tissueWick.style.height = "18%";
+    kitchenWick.style.height = "18%";
     window.setTimeout(() => {
-      simWick.style.height = `${Math.max(20, Math.min(88, cm * 1.45))}%`;
+      setWick(tissueWick, tissueCm);
+      setWick(kitchenWick, kitchenCm);
     }, 80);
   } else {
-    simWick.style.height = `${Math.max(20, Math.min(88, cm * 1.45))}%`;
+    setWick(tissueWick, tissueCm);
+    setWick(kitchenWick, kitchenCm);
   }
-  cylinderFill.style.height = `${Math.max(10, Math.min(92, cm * 1.55))}%`;
-  cylinderText.textContent = `${cm} cm`;
+  tissueText.textContent = `${tissueCm} cm`;
+  kitchenText.textContent = `${kitchenCm} cm`;
 }
 
-[paperType, paperLayers, paperWidth, observeTime].forEach((input) => {
+[paperLayers, paperWidth, paperLength, observeTime].forEach((input) => {
   input.addEventListener("input", () => updateLabVisual(false));
 });
 
 document.getElementById("labForm").addEventListener("submit", (event) => {
   event.preventDefault();
   const prediction = new FormData(event.currentTarget).get("prediction");
-  const cm = estimateCm();
-  const amount = cm >= 35 ? "很遠" : "較短";
+  const tissueCm = estimateCm("tissue");
+  const kitchenCm = estimateCm("kitchen");
+  const winner = kitchenCm >= tissueCm ? "廚房紙巾" : "衛生紙";
   updateLabVisual(true);
-  labResult.textContent = `你的預測是「水會移動${prediction}」。這次模擬約移動 ${cm} cm，距離${amount}。請想想：是哪一個條件讓結果變成這樣？`;
+  labResult.textContent = `你的預測是「${prediction}」。這次模擬中，衛生紙約 ${tissueCm} cm，廚房紙巾約 ${kitchenCm} cm；水在「${winner}」上移動得比較遠。`;
 });
 
 document.querySelectorAll("[data-load-preset]").forEach((button) => {
   button.addEventListener("click", () => {
     const preset = presets[button.dataset.loadPreset];
-    paperType.value = preset.paperType;
     paperLayers.value = preset.paperLayers;
     paperWidth.value = preset.paperWidth;
+    paperLength.value = preset.paperLength;
     observeTime.value = 30;
     labResult.textContent = preset.result;
     updateLabVisual(true);

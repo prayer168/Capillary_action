@@ -356,6 +356,15 @@ input[type="range"] {
   font-weight: 900;
 }
 
+.compare-note {
+  padding: 12px 14px;
+  border: 2px solid #bee7e7;
+  border-radius: 8px;
+  background: #f0fbfb;
+  color: var(--deep-water);
+  font-weight: 900;
+}
+
 fieldset {
   border: 2px dashed #cde5e3;
   border-radius: 8px;
@@ -374,17 +383,27 @@ legend {
   gap: 8px !important;
 }
 
-.cup-row {
+.compare-row {
   display: grid;
-  grid-template-columns: minmax(190px, 1fr) 130px;
-  gap: 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
   align-items: end;
-  min-height: 350px;
+}
+
+.sample-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sample-card h3 {
+  margin: 0;
+  text-align: center;
 }
 
 .sim-cup {
   position: relative;
-  height: 300px;
+  height: 320px;
   border: 7px solid rgba(75, 145, 161, .35);
   border-top: 0;
   border-radius: 0 0 30px 30px;
@@ -408,7 +427,16 @@ legend {
   border-radius: 8px 8px 0 0;
   background: repeating-linear-gradient(90deg, #fff3dc 0 6px, #efd2aa 6px 10px);
   overflow: hidden;
-  transition: width .25s ease, opacity .25s ease;
+  transition: width .25s ease, height .25s ease, opacity .25s ease;
+}
+
+.tissue-paper {
+  opacity: .72;
+  background: repeating-linear-gradient(90deg, #fff7ea 0 5px, #f1dfc5 5px 9px);
+}
+
+.kitchen-paper {
+  opacity: 1;
 }
 
 .sim-wick {
@@ -419,29 +447,14 @@ legend {
   transition: height 1.2s ease;
 }
 
-.measuring-cylinder {
-  position: relative;
-  height: 250px;
-  border: 5px solid rgba(75, 145, 161, .35);
-  border-top: 0;
-  border-radius: 0 0 18px 18px;
-  overflow: hidden;
-  background: rgba(255,255,255,.8);
-}
-
-.cylinder-fill {
-  position: absolute;
-  inset: auto 0 0;
-  height: 40%;
-  background: linear-gradient(180deg, rgba(227,75,95,.3), var(--red-water));
-  transition: height .8s ease;
-}
-
-.measuring-cylinder span {
-  position: absolute;
-  inset: 16px 0 auto;
+.distance-badge {
+  margin: 0;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: #eaf8f8;
   text-align: center;
   font-weight: 900;
+  color: var(--deep-water);
 }
 
 .result-box,
@@ -574,13 +587,8 @@ textarea:focus-visible {
     min-height: 350px;
   }
 
-  .cup-row {
+  .compare-row {
     grid-template-columns: 1fr;
-  }
-
-  .measuring-cylinder {
-    width: 130px;
-    justify-self: center;
   }
 }
 
