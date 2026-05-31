@@ -420,6 +420,106 @@ legend {
   overflow: hidden;
 }
 
+body[data-active-tab="lab"] main {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+body[data-active-tab="lab"] .site-header {
+  padding-top: 10px;
+  padding-bottom: 8px;
+}
+
+body[data-active-tab="lab"] .brand {
+  margin-bottom: 8px;
+}
+
+body[data-active-tab="lab"] .brand-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+}
+
+body[data-active-tab="lab"] h1 {
+  font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+}
+
+body[data-active-tab="lab"] h2 {
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  margin-bottom: 8px;
+}
+
+body[data-active-tab="lab"] .tabs {
+  gap: 7px;
+}
+
+body[data-active-tab="lab"] .tab {
+  padding: 8px 12px;
+}
+
+body[data-active-tab="lab"] .lab-layout {
+  align-items: start;
+  gap: 18px;
+}
+
+body[data-active-tab="lab"] .control-board,
+body[data-active-tab="lab"] .simulation-board {
+  padding: 14px;
+}
+
+body[data-active-tab="lab"] .control-board {
+  gap: 10px;
+}
+
+body[data-active-tab="lab"] .section-heading.compact {
+  margin-bottom: 8px;
+}
+
+body[data-active-tab="lab"] .compare-note {
+  padding: 8px 10px;
+}
+
+body[data-active-tab="lab"] fieldset {
+  padding: 8px 10px;
+}
+
+body[data-active-tab="lab"] .primary-action {
+  min-height: 42px;
+}
+
+body[data-active-tab="lab"] .compare-row {
+  gap: 12px;
+}
+
+body[data-active-tab="lab"] .sample-card {
+  gap: 6px;
+}
+
+body[data-active-tab="lab"] .sample-card h3 {
+  font-size: 1.05rem;
+}
+
+body[data-active-tab="lab"] .sim-cup {
+  height: 240px;
+}
+
+body[data-active-tab="lab"] .sim-water {
+  height: 58px;
+}
+
+body[data-active-tab="lab"] .sim-paper {
+  bottom: 24px;
+}
+
+body[data-active-tab="lab"] .distance-badge {
+  padding: 6px 8px;
+}
+
+body[data-active-tab="lab"] .result-box {
+  margin-top: 10px;
+  padding: 10px 12px;
+}
+
 .sim-water {
   position: absolute;
   inset: auto 0 0;
@@ -707,5 +807,29 @@ textarea:focus-visible {
     display: block;
     break-inside: avoid;
     margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 860px) {
+  body[data-active-tab="lab"] .lab-layout {
+    grid-template-columns: minmax(205px, .8fr) minmax(285px, 1fr);
+    gap: 10px;
+  }
+
+  body[data-active-tab="lab"] .compare-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-active-tab="lab"] .control-board,
+  body[data-active-tab="lab"] .simulation-board {
+    padding: 10px;
+  }
+
+  body[data-active-tab="lab"] .control-board {
+    gap: 8px;
+  }
+
+  body[data-active-tab="lab"] .radio-line {
+    font-size: .92rem;
   }
 }

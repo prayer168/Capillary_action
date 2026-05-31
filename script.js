@@ -2,6 +2,7 @@ const tabs = [...document.querySelectorAll(".tab")];
 const panels = [...document.querySelectorAll(".panel")];
 
 function showTab(id) {
+  document.body.dataset.activeTab = id;
   tabs.forEach((tab) => tab.classList.toggle("is-active", tab.dataset.tab === id));
   panels.forEach((panel) => panel.classList.toggle("is-active", panel.id === id));
   document.getElementById(id)?.focus({ preventScroll: true });
@@ -518,7 +519,7 @@ function updateLabVisual(animate = false) {
   lengthOut.value = paperLength.value;
   timeOut.value = observeTime.value;
   const widthMap = { 1: 42, 2: 64, 3: 92 };
-  const height = Math.max(170, Math.min(270, Number(paperLength.value) * 4.5));
+  const height = Math.max(150, Math.min(205, Number(paperLength.value) * 3.4));
   const { tissueCm, kitchenCm } = getLabState();
   [tissuePaper, kitchenPaper].forEach((paper) => {
     paper.style.width = `${widthMap[paperWidth.value]}px`;
