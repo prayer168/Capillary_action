@@ -442,6 +442,7 @@ const kitchenWick = document.getElementById("kitchenWick");
 const tissueText = document.getElementById("tissueText");
 const kitchenText = document.getElementById("kitchenText");
 const labResult = document.getElementById("labResult");
+let labAnimationFrame = null;
 
 function estimateCm(material) {
   const materialBase = material === "kitchen" ? 18 : 7;
@@ -452,32 +453,82 @@ function estimateCm(material) {
   return Math.round((materialBase + layerBoost + widthBoost) * lengthFactor * timeFactor);
 }
 
+function getLabState() {
+  return {
+    tissueCm: Math.min(60, estimateCm("tissue")),
+    kitchenCm: Math.min(60, estimateCm("kitchen"))
+  };
+}
+
+function wickHeightFromCm(cm) {
+  return Math.max(18, Math.min(88, cm * 1.45));
+}
+
+function setWickHeight(wick, percent) {
+  wick.style.height = `${percent}%`;
+}
+
+function stopLabAnimation() {
+  if (labAnimationFrame !== null) {
+    window.cancelAnimationFrame(labAnimationFrame);
+    labAnimationFrame = null;
+  }
+}
+
+function animateLabRise(tissueCm, kitchenCm, onComplete) {
+  stopLabAnimation();
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const duration = reduced ? 900 : 7000;
+  const startHeight = 18;
+  const tissueTarget = wickHeightFromCm(tissueCm);
+  const kitchenTarget = wickHeightFromCm(kitchenCm);
+  const start = performance.now();
+  setWickHeight(tissueWick, startHeight);
+  setWickHeight(kitchenWick, startHeight);
+  tissueText.textContent = "0 cm";
+  kitchenText.textContent = "0 cm";
+
+  const tick = (now) => {
+    const rawProgress = Math.min(1, (now - start) / duration);
+    const progress = 1 - Math.pow(1 - rawProgress, 3);
+    const currentTissueHeight = startHeight + (tissueTarget - startHeight) * progress;
+    const currentKitchenHeight = startHeight + (kitchenTarget - startHeight) * progress;
+    setWickHeight(tissueWick, currentTissueHeight);
+    setWickHeight(kitchenWick, currentKitchenHeight);
+    tissueText.textContent = `${Math.round(tissueCm * progress)} cm`;
+    kitchenText.textContent = `${Math.round(kitchenCm * progress)} cm`;
+
+    if (rawProgress < 1) {
+      labAnimationFrame = window.requestAnimationFrame(tick);
+    } else {
+      labAnimationFrame = null;
+      tissueText.textContent = `${tissueCm} cm`;
+      kitchenText.textContent = `${kitchenCm} cm`;
+      onComplete?.();
+    }
+  };
+
+  labAnimationFrame = window.requestAnimationFrame(tick);
+}
+
 function updateLabVisual(animate = false) {
+  stopLabAnimation();
   layerOut.value = paperLayers.value;
   widthOut.value = { 1: "細", 2: "中", 3: "寬" }[paperWidth.value];
   lengthOut.value = paperLength.value;
   timeOut.value = observeTime.value;
   const widthMap = { 1: 42, 2: 64, 3: 92 };
   const height = Math.max(170, Math.min(270, Number(paperLength.value) * 4.5));
-  const tissueCm = Math.min(60, estimateCm("tissue"));
-  const kitchenCm = Math.min(60, estimateCm("kitchen"));
+  const { tissueCm, kitchenCm } = getLabState();
   [tissuePaper, kitchenPaper].forEach((paper) => {
     paper.style.width = `${widthMap[paperWidth.value]}px`;
     paper.style.height = `${height}px`;
   });
-  const setWick = (wick, cm) => {
-    wick.style.height = `${Math.max(18, Math.min(88, cm * 1.45))}%`;
-  };
   if (animate) {
-    tissueWick.style.height = "18%";
-    kitchenWick.style.height = "18%";
-    window.setTimeout(() => {
-      setWick(tissueWick, tissueCm);
-      setWick(kitchenWick, kitchenCm);
-    }, 80);
+    animateLabRise(tissueCm, kitchenCm);
   } else {
-    setWick(tissueWick, tissueCm);
-    setWick(kitchenWick, kitchenCm);
+    setWickHeight(tissueWick, 18);
+    setWickHeight(kitchenWick, 18);
   }
   tissueText.textContent = `${tissueCm} cm`;
   kitchenText.textContent = `${kitchenCm} cm`;
@@ -490,11 +541,13 @@ function updateLabVisual(animate = false) {
 document.getElementById("labForm").addEventListener("submit", (event) => {
   event.preventDefault();
   const prediction = new FormData(event.currentTarget).get("prediction");
-  const tissueCm = estimateCm("tissue");
-  const kitchenCm = estimateCm("kitchen");
+  const { tissueCm, kitchenCm } = getLabState();
   const winner = kitchenCm >= tissueCm ? "廚房紙巾" : "衛生紙";
-  updateLabVisual(true);
-  labResult.textContent = `你的預測是「${prediction}」。這次模擬中，衛生紙約 ${tissueCm} cm，廚房紙巾約 ${kitchenCm} cm；水在「${winner}」上移動得比較遠。`;
+  updateLabVisual(false);
+  labResult.textContent = "觀察中：紅色水正在沿著紙纖維慢慢上升，請注意兩種紙的高度變化。";
+  animateLabRise(tissueCm, kitchenCm, () => {
+    labResult.textContent = `你的預測是「${prediction}」。這次模擬中，衛生紙約 ${tissueCm} cm，廚房紙巾約 ${kitchenCm} cm；水在「${winner}」上移動得比較遠。`;
+  });
 });
 
 document.querySelectorAll("[data-load-preset]").forEach((button) => {

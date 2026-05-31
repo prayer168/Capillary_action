@@ -454,7 +454,7 @@ legend {
   inset: auto 0 0;
   height: 18%;
   background: linear-gradient(180deg, rgba(227,75,95,.06), rgba(227,75,95,.75));
-  transition: height 1.2s ease;
+  transition: none;
 }
 
 .distance-badge {
