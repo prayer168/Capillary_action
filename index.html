@@ -203,25 +203,33 @@
         <p class="section-kicker">生活中的毛細現象</p>
         <h2>水也會在生活用品裡慢慢移動</h2>
       </div>
-      <div class="application-grid">
-        <article class="application-card">
-          <div class="application-icon" aria-hidden="true">抹</div>
-          <h3>抹布和紙巾吸水</h3>
-          <p>抹布、紙巾裡有許多細小空隙，水會沿著空隙移動，所以能把桌上的水吸起來。</p>
-        </article>
-        <article class="application-card">
-          <div class="application-icon" aria-hidden="true">植</div>
-          <h3>植物把水往上送</h3>
-          <p>植物的莖裡有細小管道，可以幫助水從根部往上移動，送到葉子附近。</p>
-        </article>
-        <article class="application-card">
-          <div class="application-icon" aria-hidden="true">彩</div>
-          <h3>彩色水爬上紙條</h3>
-          <p>把紙條放進色素水裡，顏色會跟著水往上跑，可以觀察不同紙張的移動距離。</p>
+      <div class="application-explorer">
+        <div class="application-menu" aria-label="生活應用例子">
+          <button class="application-choice is-active" data-app="towel">抹布吸水</button>
+          <button class="application-choice" data-app="plant">植物輸水</button>
+          <button class="application-choice" data-app="paper">紙巾擴散</button>
+          <button class="application-choice" data-app="wick">蠟燭燈芯</button>
+          <button class="application-choice" data-app="soil">土壤保水</button>
+          <button class="application-choice" data-app="straw">吸管花實驗</button>
+        </div>
+        <article class="application-display" id="applicationDisplay">
+          <div class="application-visual towel-scene" id="applicationVisual" aria-hidden="true">
+            <span class="visual-water"></span>
+            <span class="visual-main"></span>
+            <span class="visual-line one"></span>
+            <span class="visual-line two"></span>
+            <span class="visual-line three"></span>
+          </div>
+          <div class="application-copy">
+            <p class="section-kicker" id="applicationKicker">例子 1</p>
+            <h3 id="applicationTitle">抹布吸水</h3>
+            <p id="applicationText">抹布裡有很多細小空隙，水會沿著纖維間的小縫縫移動，所以可以把桌上的水慢慢吸起來。</p>
+            <p class="think-line" id="applicationThink">想一想：為什麼厚一點的抹布通常可以吸比較多水？</p>
+          </div>
         </article>
       </div>
       <div class="application-prompt">
-        想一想：如果要擦乾桌面，你會選衛生紙還是廚房紙巾？請用毛細現象說明你的理由。
+        點選左邊的例子，觀察右邊的情境圖，再用「細小空隙」和「水會沿著縫隙移動」說明原因。
       </div>
     </section>
 

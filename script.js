@@ -13,6 +13,71 @@ document.querySelectorAll("[data-jump]").forEach((button) => {
   button.addEventListener("click", () => showTab(button.dataset.jump));
 });
 
+const applicationExamples = {
+  towel: {
+    kicker: "例子 1",
+    title: "抹布吸水",
+    text: "抹布裡有很多細小空隙，水會沿著纖維間的小縫縫移動，所以可以把桌上的水慢慢吸起來。",
+    think: "想一想：為什麼厚一點的抹布通常可以吸比較多水？",
+    scene: "towel-scene"
+  },
+  plant: {
+    kicker: "例子 2",
+    title: "植物把水往上送",
+    text: "植物莖裡有細小管道，水可以從根部往上移動，幫助葉子得到需要的水分。",
+    think: "想一想：如果植物缺水，葉子可能會發生什麼變化？",
+    scene: "plant-scene"
+  },
+  paper: {
+    kicker: "例子 3",
+    title: "紙巾上的顏色擴散",
+    text: "把水滴在紙巾上，水會沿著紙纖維擴散，顏色也會跟著水往外移動。",
+    think: "想一想：為什麼水滴在衛生紙上會慢慢變成一大片？",
+    scene: "paper-scene"
+  },
+  wick: {
+    kicker: "例子 4",
+    title: "蠟燭燈芯吸蠟油",
+    text: "蠟燭燃燒時，融化的蠟油會沿著燈芯的小縫隙往上移動，讓火焰可以持續燃燒。",
+    think: "想一想：燈芯如果太短或太濕，火焰可能會怎樣？",
+    scene: "wick-scene"
+  },
+  soil: {
+    kicker: "例子 5",
+    title: "土壤把水留住",
+    text: "土壤顆粒之間有小空隙，水會停留或慢慢移動，植物的根就能接觸到水。",
+    think: "想一想：為什麼太鬆或太硬的土都可能影響植物生長？",
+    scene: "soil-scene"
+  },
+  straw: {
+    kicker: "例子 6",
+    title: "吸管花和紙花實驗",
+    text: "把紙花或紙條碰到彩色水，水會沿著紙的空隙往上移動，讓顏色慢慢爬高。",
+    think: "想一想：紙條越寬或層數越多，顏色移動會一樣嗎？",
+    scene: "straw-scene"
+  }
+};
+
+const applicationVisual = document.getElementById("applicationVisual");
+const applicationKicker = document.getElementById("applicationKicker");
+const applicationTitle = document.getElementById("applicationTitle");
+const applicationText = document.getElementById("applicationText");
+const applicationThink = document.getElementById("applicationThink");
+
+document.querySelectorAll(".application-choice").forEach((button) => {
+  button.addEventListener("click", () => {
+    const item = applicationExamples[button.dataset.app];
+    document.querySelectorAll(".application-choice").forEach((choice) => {
+      choice.classList.toggle("is-active", choice === button);
+    });
+    applicationVisual.className = `application-visual ${item.scene}`;
+    applicationKicker.textContent = item.kicker;
+    applicationTitle.textContent = item.title;
+    applicationText.textContent = item.text;
+    applicationThink.textContent = item.think;
+  });
+});
+
 const presets = {
   material: {
     paperLayers: 4,
