@@ -71,7 +71,7 @@
         <article class="mission-card">
           <span class="mission-number">2</span>
           <h3>不同層數</h3>
-          <p>一層和四層廚房紙巾，吸水量會一樣嗎？</p>
+          <p>一層和四層廚房紙巾，水移動距離會一樣嗎？</p>
           <button class="small-action" data-load-preset="layers">帶入任務</button>
         </article>
         <article class="mission-card">
@@ -134,9 +134,9 @@
                 <div class="sim-wick" id="simWick"></div>
               </div>
             </div>
-            <div class="measuring-cylinder" aria-label="量筒顯示預估水量">
+            <div class="measuring-cylinder" aria-label="刻度尺顯示預估水移動距離">
               <div class="cylinder-fill" id="cylinderFill"></div>
-              <span id="cylinderText">40 mL</span>
+              <span id="cylinderText">40 cm</span>
             </div>
           </div>
           <div class="result-box" id="labResult">
@@ -150,7 +150,7 @@
       <div class="data-layout">
         <div class="data-entry">
           <div class="section-heading compact">
-            <p class="section-kicker">輸入自己的實驗數據</p>
+            <p class="section-kicker">輸入自己的實驗數據，單位：cm</p>
             <h2>我的數據圖表</h2>
           </div>
           <div class="input-grid" id="dataInputs"></div>
@@ -160,7 +160,7 @@
           </div>
         </div>
         <div class="chart-board">
-          <canvas id="barChart" width="720" height="420" aria-label="吸水量長條圖"></canvas>
+          <canvas id="barChart" width="720" height="420" aria-label="水移動距離長條圖"></canvas>
           <p class="conclusion" id="conclusion"></p>
         </div>
       </div>

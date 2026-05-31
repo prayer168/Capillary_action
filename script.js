@@ -18,19 +18,19 @@ const presets = {
     paperType: "kitchen",
     paperLayers: 4,
     paperWidth: "medium",
-    result: "影片任務一：衛生紙 15 mL，廚房紙巾 52 mL。"
+    result: "影片任務一：衛生紙 15 cm，廚房紙巾 52 cm。"
   },
   layers: {
     paperType: "kitchen",
     paperLayers: 4,
     paperWidth: "medium",
-    result: "影片任務二：一層廚房紙巾 10 mL，四層廚房紙巾 40 mL。"
+    result: "影片任務二：一層廚房紙巾 10 cm，四層廚房紙巾 40 cm。"
   },
   width: {
     paperType: "kitchen",
     paperLayers: 1,
     paperWidth: "wide",
-    result: "影片任務三：細紙條 11 mL，寬紙條 15 mL。"
+    result: "影片任務三：細紙條 11 cm，寬紙條 15 cm。"
   }
 };
 
@@ -46,7 +46,7 @@ const cylinderFill = document.getElementById("cylinderFill");
 const cylinderText = document.getElementById("cylinderText");
 const labResult = document.getElementById("labResult");
 
-function estimateMl() {
+function estimateCm() {
   const materialBase = paperType.value === "kitchen" ? 18 : 7;
   const layerBoost = Number(paperLayers.value) * (paperType.value === "kitchen" ? 8 : 3);
   const widthBoost = { narrow: 3, medium: 8, wide: 13 }[paperWidth.value];
@@ -58,19 +58,19 @@ function updateLabVisual(animate = false) {
   layerOut.value = paperLayers.value;
   timeOut.value = observeTime.value;
   const widthMap = { narrow: 42, medium: 64, wide: 92 };
-  const ml = Math.min(60, estimateMl());
+  const cm = Math.min(60, estimateCm());
   simPaper.style.width = `${widthMap[paperWidth.value]}px`;
   simPaper.style.opacity = paperType.value === "kitchen" ? "1" : ".72";
   if (animate) {
     simWick.style.height = "18%";
     window.setTimeout(() => {
-      simWick.style.height = `${Math.max(20, Math.min(88, ml * 1.45))}%`;
+      simWick.style.height = `${Math.max(20, Math.min(88, cm * 1.45))}%`;
     }, 80);
   } else {
-    simWick.style.height = `${Math.max(20, Math.min(88, ml * 1.45))}%`;
+    simWick.style.height = `${Math.max(20, Math.min(88, cm * 1.45))}%`;
   }
-  cylinderFill.style.height = `${Math.max(10, Math.min(92, ml * 1.55))}%`;
-  cylinderText.textContent = `${ml} mL`;
+  cylinderFill.style.height = `${Math.max(10, Math.min(92, cm * 1.55))}%`;
+  cylinderText.textContent = `${cm} cm`;
 }
 
 [paperType, paperLayers, paperWidth, observeTime].forEach((input) => {
@@ -80,10 +80,10 @@ function updateLabVisual(animate = false) {
 document.getElementById("labForm").addEventListener("submit", (event) => {
   event.preventDefault();
   const prediction = new FormData(event.currentTarget).get("prediction");
-  const ml = estimateMl();
-  const amount = ml >= 35 ? "很多" : "較少";
+  const cm = estimateCm();
+  const amount = cm >= 35 ? "很遠" : "較短";
   updateLabVisual(true);
-  labResult.textContent = `你的預測是「水會移動${prediction}」。這次模擬約移動 ${ml} mL，屬於${amount}。請想想：是哪一個條件讓結果變成這樣？`;
+  labResult.textContent = `你的預測是「水會移動${prediction}」。這次模擬約移動 ${cm} cm，距離${amount}。請想想：是哪一個條件讓結果變成這樣？`;
 });
 
 document.querySelectorAll("[data-load-preset]").forEach((button) => {
@@ -124,7 +124,7 @@ function makeDataInputs() {
     input.max = "200";
     input.value = value;
     input.dataset.index = index;
-    input.setAttribute("aria-label", `${label}測得水量，單位毫升`);
+    input.setAttribute("aria-label", `${label}水移動距離，單位公分`);
     input.addEventListener("input", drawChart);
     row.append(input);
     dataInputs.append(row);
@@ -170,13 +170,13 @@ function drawChart() {
     ctx.fillStyle = "#17323a";
     ctx.font = "700 20px 'Noto Sans TC', sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText(`${item.value} mL`, x + barW / 2, y - 10);
+    ctx.fillText(`${item.value} cm`, x + barW / 2, y - 10);
     ctx.font = "700 15px 'Noto Sans TC', sans-serif";
     wrapText(item.label, x + barW / 2, height - 36, Math.min(95, barW + 10), 18);
   });
 
   const winner = data.reduce((best, item) => (item.value > best.value ? item : best), data[0]);
-  conclusion.textContent = `這次實驗中，「${winner.label}」移動的水量最多，是 ${winner.value} mL。請用紙材、層數或寬度來說明你的想法。`;
+  conclusion.textContent = `這次實驗中，「${winner.label}」水移動的距離最遠，是 ${winner.value} cm。請用紙材、層數或寬度來說明你的想法。`;
 }
 
 function wrapText(text, x, y, maxWidth, lineHeight) {
@@ -212,13 +212,13 @@ const quizItems = [
     feedback: "抹布裡有細小空隙，水會沿著空隙移動。"
   },
   {
-    question: "影片中，哪一種紙移動的水量比較多？",
+    question: "影片中，哪一種紙讓水移動得比較遠？",
     options: ["衛生紙", "廚房紙巾", "兩種完全一樣"],
     answer: 1,
-    feedback: "廚房紙巾約 52 mL，比衛生紙約 15 mL 多。"
+    feedback: "廚房紙巾約 52 cm，比衛生紙約 15 cm 遠。"
   },
   {
-    question: "四層廚房紙巾比一層廚房紙巾吸水量多，可能和什麼有關？",
+    question: "四層廚房紙巾比一層廚房紙巾讓水移動得更遠，可能和什麼有關？",
     options: ["紙變得比較黑", "可吸水的紙纖維變多", "杯子變高了"],
     answer: 1,
     feedback: "層數變多，能讓水通過或停留的纖維也變多。"
@@ -231,15 +231,15 @@ const quizItems = [
   },
   {
     question: "如果紙條比較寬，影片中水移動量大約如何？",
-    options: ["比較多", "一定是 0 mL", "會變成冰"],
+    options: ["比較遠", "一定是 0 cm", "會變成冰"],
     answer: 0,
-    feedback: "寬紙條約 15 mL，細紙條約 11 mL。"
+    feedback: "寬紙條約 15 cm，細紙條約 11 cm。"
   },
   {
     question: "看到長條圖最高的一欄，代表什麼？",
-    options: ["那一組測得水量最多", "那一組紙條最漂亮", "那一組一定做錯"],
+    options: ["那一組水移動距離最遠", "那一組紙條最漂亮", "那一組一定做錯"],
     answer: 0,
-    feedback: "長條越高，表示測得的水量越多。"
+    feedback: "長條越高，表示水移動的距離越遠。"
   }
 ];
 
