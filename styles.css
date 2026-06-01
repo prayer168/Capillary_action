@@ -641,6 +641,10 @@ body[data-active-tab="lab"] .result-box {
 }
 
 .application-choice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   min-height: 48px;
   border: 0;
   border-radius: 8px;
@@ -648,8 +652,13 @@ body[data-active-tab="lab"] .result-box {
   color: var(--ink);
   cursor: pointer;
   font-weight: 900;
-  text-align: left;
+  text-align: center;
   padding: 10px 14px;
+}
+
+.application-choice span {
+  font-size: 1.25rem;
+  line-height: 1;
 }
 
 .application-choice.is-active {
