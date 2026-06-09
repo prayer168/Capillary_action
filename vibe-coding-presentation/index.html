@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vibe Coding 經驗分享</title>
+  <meta name="description" content="從定義、原理、工具、skill 工作流、互動教材實作到 GitHub Pages 佈署的 Vibe Coding 網頁式簡報。">
+  <meta property="og:title" content="Vibe Coding 經驗分享">
+  <meta property="og:description" content="以互動數位教材 skill 為案例，整理 Vibe Coding 的定義、原理、工具、實作與佈署。">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="deck-shell">
+    <aside class="sidebar" aria-label="簡報導覽">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <div>
+          <strong>Vibe Coding</strong>
+          <small>經驗分享</small>
+        </div>
+      </div>
+      <nav class="toc" id="toc" aria-label="投影片清單"></nav>
+      <div class="hint">
+        <span>鍵盤</span>
+        <kbd>←</kbd><kbd>→</kbd>
+      </div>
+    </aside>
+
+    <main class="stage" aria-live="polite">
+      <section class="slide title" data-title="開場">
+        <div class="cover-visual" aria-hidden="true">
+          <div class="node n1">Idea</div>
+          <div class="node n2">Prompt</div>
+          <div class="node n3">Code</div>
+          <div class="node n4">Deploy</div>
+          <div class="beam b1"></div>
+          <div class="beam b2"></div>
+          <div class="beam b3"></div>
+        </div>
+        <p class="eyebrow">從教學想法到可分享網頁</p>
+        <h1>Vibe Coding 經驗分享</h1>
+        <p class="lead">以「互動數位教材 skill」為案例，說明如何把需求、AI 協作、程式實作、驗證與 GitHub Pages 佈署串成可重複的工作流。</p>
+        <div class="meta-row">
+          <span>約 30 頁</span>
+          <span>定義 / 原理 / 工具 / 實作 / 佈署</span>
+        </div>
+      </section>
+
+      <section class="slide" data-title="今日路線">
+        <p class="eyebrow">Agenda</p>
+        <h2>今天不是只談「讓 AI 寫程式」</h2>
+        <div class="timeline">
+          <article><b>1</b><strong>定義</strong><span>Vibe coding 是什麼，不是什麼。</span></article>
+          <article><b>2</b><strong>原理</strong><span>需求、上下文、迭代、驗證如何形成閉環。</span></article>
+          <article><b>3</b><strong>工具</strong><span>Codex、Skill、瀏覽器、GitHub、靜態網站。</span></article>
+          <article><b>4</b><strong>實作</strong><span>用互動教材案例走一次完整流程。</span></article>
+          <article><b>5</b><strong>佈署</strong><span>把網頁交付到 GitHub Pages，並能持續修改。</span></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="一句話定義">
+        <p class="eyebrow">Definition</p>
+        <h2>Vibe Coding：把意圖轉成可運行成果的協作流程</h2>
+        <div class="split">
+          <div>
+            <p class="big">它不是單純「請 AI 幫我寫一段程式」，而是用自然語言、範例、檔案、錯誤訊息和測試結果，持續校準 AI 的方向，直到產品真的能用。</p>
+          </div>
+          <div class="quote-card">
+            <strong>核心判準</strong>
+            <p>成果能否被打開、操作、檢查、修改、佈署，而不是回答看起來是否聰明。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="不是什麼">
+        <p class="eyebrow">Boundary</p>
+        <h2>Vibe Coding 不是放棄工程判斷</h2>
+        <div class="compare">
+          <article>
+            <h3>常見誤解</h3>
+            <ul>
+              <li>只要描述感覺，AI 就會完成所有事情。</li>
+              <li>看起來有畫面，就等於功能正確。</li>
+              <li>複製貼上答案，不需要理解檔案結構。</li>
+              <li>不用測試，不用版本控制。</li>
+            </ul>
+          </article>
+          <article>
+            <h3>實際做法</h3>
+            <ul>
+              <li>用具體需求與限制引導產出。</li>
+              <li>讓 AI 讀專案、改檔、跑檢查。</li>
+              <li>把錯誤、畫面、使用者回饋納入下一輪。</li>
+              <li>用 Git 與佈署流程保留可回溯紀錄。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="三層能力">
+        <p class="eyebrow">Mental Model</p>
+        <h2>三層能力：說清楚、看現場、驗結果</h2>
+        <div class="layers">
+          <article><span>01</span><h3>需求表達</h3><p>把目標、受眾、情境、限制、範例與成功條件講清楚。</p></article>
+          <article><span>02</span><h3>上下文操作</h3><p>讓 AI 讀檔案、理解現有架構、沿用風格、保留使用者原本修改。</p></article>
+          <article><span>03</span><h3>驗證閉環</h3><p>用語法檢查、瀏覽器、RWD、功能操作與線上頁面確認成果。</p></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="基本循環">
+        <p class="eyebrow">Loop</p>
+        <h2>Vibe Coding 的基本循環</h2>
+        <div class="loop">
+          <div>意圖</div><div>提示</div><div>實作</div><div>驗證</div><div>修正</div>
+        </div>
+        <p class="note">真正的關鍵是「修正」：你不需要第一次就講完所有需求，但每一輪都要讓模型更接近可交付結果。</p>
+      </section>
+
+      <section class="slide" data-title="為什麼可行">
+        <p class="eyebrow">Principle</p>
+        <h2>它可行，因為程式工作本來就很適合外部化</h2>
+        <div class="cards">
+          <article><h3>需求可文字化</h3><p>功能、限制、元件、流程、資料格式都能用文字或範例描述。</p></article>
+          <article><h3>成果可執行</h3><p>網站、腳本、測試和錯誤訊息都能成為下一輪輸入。</p></article>
+          <article><h3>品質可檢查</h3><p>語法、互動、RWD、連結、佈署狀態都能被明確驗證。</p></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Prompt 到規格">
+        <p class="eyebrow">Prompting</p>
+        <h2>好的提示不是咒語，是壓縮後的規格</h2>
+        <div class="prompt-box">
+          <p>「我要做一個四年級自然課互動教材，主題是毛細現象。第一屏要能直接操作；學生可以調整材質、寬度、時間，看到水位上升；要 RWD；最後可佈署到 GitHub Pages。」</p>
+        </div>
+        <ul class="checklist">
+          <li>受眾：四年級學生</li>
+          <li>任務：互動教材，不是文章頁</li>
+          <li>核心互動：材質、寬度、時間、水位</li>
+          <li>限制：RWD、靜態網站、GitHub Pages</li>
+        </ul>
+      </section>
+
+      <section class="slide" data-title="上下文工程">
+        <p class="eyebrow">Context Engineering</p>
+        <h2>上下文比單次 prompt 更重要</h2>
+        <div class="split">
+          <div>
+            <h3>給 AI 的上下文</h3>
+            <ul>
+              <li>目前資料夾與既有檔案。</li>
+              <li>使用者剛建立的 skill。</li>
+              <li>已存在的設計風格與頁面模式。</li>
+              <li>錯誤訊息、截圖、測試輸出。</li>
+            </ul>
+          </div>
+          <div>
+            <h3>AI 應該回報</h3>
+            <ul>
+              <li>它正在讀哪些檔案。</li>
+              <li>它採用哪些既有規則。</li>
+              <li>它改了哪些檔案。</li>
+              <li>它跑了哪些驗證。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Skill 是什麼">
+        <p class="eyebrow">Skill</p>
+        <h2>Skill：把你的偏好變成可重複流程</h2>
+        <p class="big">你建立的 skill 不是一般備忘錄，而是給 Codex 的工作規範：何時使用、先問什麼、怎麼設計、要建立哪些檔案、如何驗證、怎麼佈署。</p>
+        <div class="code-card">
+<pre><code>name: build-interactive-science-lesson
+description: Build, revise, document, and publish responsive
+digital interactive science learning materials...</code></pre>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Skill 的價值">
+        <p class="eyebrow">Why Skill</p>
+        <h2>Skill 解決的是「每次都要重新交代」的問題</h2>
+        <div class="cards">
+          <article><h3>穩定風格</h3><p>例如繁體中文、國小自然課、觸控友善、大字標籤、第一屏就是可用體驗。</p></article>
+          <article><h3>穩定流程</h3><p>先確認範圍、做設計摘要、建靜態檔、驗證互動、再佈署。</p></article>
+          <article><h3>穩定品質</h3><p>把常見失敗模式寫進規則，下一次模型就會主動避開。</p></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Skill 結構">
+        <p class="eyebrow">Skill Anatomy</p>
+        <h2>一個實用 skill 通常包含這些段落</h2>
+        <div class="table">
+          <div><strong>Purpose</strong><span>說明這個 skill 要解決的任務。</span></div>
+          <div><strong>Operating Rules</strong><span>語言、資料夾、版本控制、修改範圍。</span></div>
+          <div><strong>Workflow</strong><span>從確認需求到建檔、驗證、佈署。</span></div>
+          <div><strong>Patterns</strong><span>常用互動形式，例如比較實驗、滑桿、圖表、Canvas。</span></div>
+          <div><strong>Checklist</strong><span>交付前要跑的檢查。</span></div>
+          <div><strong>Failure Modes</strong><span>常見錯誤與預防方式。</span></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="工具地圖">
+        <p class="eyebrow">Tools</p>
+        <h2>一場完整 Vibe Coding 會用到的工具</h2>
+        <div class="tool-grid">
+          <article><b>Codex</b><span>讀專案、改檔、跑命令、協作迭代。</span></article>
+          <article><b>Skill</b><span>保存你的工作規則與教學偏好。</span></article>
+          <article><b>PowerShell</b><span>檔案搜尋、語法檢查、啟動本機伺服器。</span></article>
+          <article><b>Browser</b><span>實際打開頁面、看畫面、測 RWD。</span></article>
+          <article><b>Git</b><span>追蹤修改、提交版本、處理遠端同步。</span></article>
+          <article><b>GitHub Pages</b><span>讓靜態網站公開分享。</span></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="檔案結構">
+        <p class="eyebrow">Static Site</p>
+        <h2>互動教材最常用的靜態網站結構</h2>
+        <div class="code-card wide">
+<pre><code>lesson-folder/
+  index.html    # 結構與內容
+  styles.css    # 視覺、RWD、投影或手機版
+  script.js     # 互動、Canvas、資料、驗證
+  README.md     # 使用方式、佈署說明
+  .nojekyll     # GitHub Pages 靜態檔提示</code></pre>
+        </div>
+        <p class="note">這種結構適合老師分享、學生開啟、GitHub Pages 佈署，也方便日後讓 AI 做小幅修正。</p>
+      </section>
+
+      <section class="slide" data-title="案例設定">
+        <p class="eyebrow">Case Study</p>
+        <h2>案例：用 Vibe Coding 建互動自然教材</h2>
+        <div class="case-board">
+          <article><strong>教學主題</strong><span>毛細現象、連通管、保溫瓶或其他自然單元。</span></article>
+          <article><strong>學習情境</strong><span>課堂投影、學生平板操作、小組觀察紀錄。</span></article>
+          <article><strong>成果形式</strong><span>一頁式互動網站，包含模擬、資料輸入、圖表與測驗。</span></article>
+          <article><strong>交付方式</strong><span>本機資料夾、GitHub repo、GitHub Pages 網址。</span></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="需求訪談">
+        <p class="eyebrow">Step 1</p>
+        <h2>先問少量關鍵問題，不把老師拖進技術細節</h2>
+        <ul class="large-list">
+          <li>年級、單元、課堂使用方式是什麼？</li>
+          <li>學生要自己操作、老師投影，還是小組活動？</li>
+          <li>是否有影片、逐字稿、教材 PDF、圖片或參考網站？</li>
+          <li>需要模擬、圖表、測驗、學習單、教師備註嗎？</li>
+          <li>最後要放在哪個資料夾、哪個 GitHub repo？</li>
+        </ul>
+      </section>
+
+      <section class="slide" data-title="設計摘要">
+        <p class="eyebrow">Step 2</p>
+        <h2>先產生設計摘要，讓方向可確認</h2>
+        <div class="design-brief">
+          <div><b>標題</b><span>四年級自然：觀察毛細現象</span></div>
+          <div><b>目標</b><span>看見水在細縫或纖維中上升，理解材料與寬度的影響。</span></div>
+          <div><b>頁籤</b><span>實驗室、資料紀錄、生活應用、小測驗。</span></div>
+          <div><b>互動</b><span>滑桿控制寬度與時間，按鈕重播水位上升動畫。</span></div>
+          <div><b>RWD</b><span>桌機並排比較，手機改為上下堆疊與大按鈕。</span></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="第一屏">
+        <p class="eyebrow">UX Principle</p>
+        <h2>第一屏就要能用，不要先做說明頁</h2>
+        <div class="mock-app">
+          <div class="mock-toolbar"><span></span><span></span><span></span></div>
+          <div class="mock-content">
+            <div class="water-tube"><i></i></div>
+            <div class="lab-controls">
+              <label>縫隙寬度 <input type="range" value="42" aria-label="示意滑桿"></label>
+              <label>材料 <button>紙巾</button><button>棉布</button></label>
+              <button class="primary">開始觀察</button>
+            </div>
+          </div>
+        </div>
+        <p class="note">Vibe coding 的提示可以直接指定：「不要做 landing page，第一畫面就是學生操作區」。</p>
+      </section>
+
+      <section class="slide" data-title="互動模式">
+        <p class="eyebrow">Patterns</p>
+        <h2>互動教材常用模式</h2>
+        <div class="cards">
+          <article><h3>比較實驗</h3><p>兩種材料並排，學生直接比較結果，不藏在下拉選單裡。</p></article>
+          <article><h3>滑桿控制</h3><p>寬度、層數、時間、距離等連續變因用 slider 表示。</p></article>
+          <article><h3>資料圖表</h3><p>學生輸入觀察值，圖表立即更新，單位保持一致。</p></article>
+          <article><h3>Canvas 模擬</h3><p>用動畫呈現肉眼不易觀察的概念變化。</p></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="程式範例">
+        <p class="eyebrow">Example Code</p>
+        <h2>範例：讓滑桿更新模擬數值</h2>
+        <div class="code-card wide">
+<pre><code>const widthSlider = document.querySelector("#tubeWidth");
+const result = document.querySelector("#riseHeight");
+
+function calculateRise(width, materialFactor) {
+  return Math.round((materialFactor / width) * 100);
+}
+
+widthSlider.addEventListener("input", () => {
+  const height = calculateRise(Number(widthSlider.value), 1.8);
+  result.textContent = `${height} cm`;
+  drawCapillaryScene(height);
+});</code></pre>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Canvas 原則">
+        <p class="eyebrow">Canvas</p>
+        <h2>Canvas 最容易踩雷：隱藏頁籤與尺寸</h2>
+        <div class="warning-grid">
+          <article><strong>問題</strong><p>Canvas 在隱藏 tab 裡初始化，寬高可能是 0，切換後會空白。</p></article>
+          <article><strong>處理</strong><p>第一時間畫出可見 frame，tab 切換與 resize 後重新計算尺寸再 redraw。</p></article>
+          <article><strong>驗證</strong><p>確認 canvas 寬高非 0、畫面非空白、console 沒錯誤。</p></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="RWD">
+        <p class="eyebrow">Responsive</p>
+        <h2>RWD 不只是縮小，是改變操作密度</h2>
+        <div class="device-row">
+          <article class="desktop"><b>桌機 / 投影</b><span>並排比較、較大圖表、老師可遠距離講解。</span></article>
+          <article class="tablet"><b>平板</b><span>保留兩欄或改成上下區塊，按鈕需適合觸控。</span></article>
+          <article class="phone"><b>手機</b><span>單欄、短標籤、控制項寬度固定，避免文字擠壓。</span></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="驗證清單">
+        <p class="eyebrow">Validation</p>
+        <h2>交付前要讓 AI 真的檢查</h2>
+        <div class="table">
+          <div><strong>語法</strong><span><code>node --check script.js</code></span></div>
+          <div><strong>文字一致</strong><span>年級、單元、單位、標題、metadata 全部搜尋。</span></div>
+          <div><strong>互動</strong><span>tab、slider、quiz、reset、chart、canvas 都操作一次。</span></div>
+          <div><strong>RWD</strong><span>桌機、平板、手機寬度檢查不重疊、不溢出。</span></div>
+          <div><strong>佈署</strong><span>線上頁面用 cache-busting query string 驗證。</span></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="實作流程">
+        <p class="eyebrow">Live Build Flow</p>
+        <h2>一次實作可以這樣跑</h2>
+        <ol class="steps">
+          <li>讀 skill 與現有專案，確認可沿用的規則。</li>
+          <li>建立資料夾與靜態檔案。</li>
+          <li>先完成第一屏互動，再補頁籤與內容。</li>
+          <li>加入資料輸入、圖表、動畫與測驗。</li>
+          <li>跑語法檢查與瀏覽器視覺檢查。</li>
+          <li>修正問題後提交 Git 並佈署。</li>
+        </ol>
+      </section>
+
+      <section class="slide" data-title="溝通範例">
+        <p class="eyebrow">Conversation</p>
+        <h2>你可以這樣指揮 AI</h2>
+        <div class="dialogue">
+          <p><b>老師：</b>第一頁太像介紹頁，學生打開後還不知道要做什麼。</p>
+          <p><b>AI：</b>我會把實驗操作區移到第一屏，保留標題但縮短說明，並把「開始觀察」設為主要動作。</p>
+          <p><b>老師：</b>手機上按鈕擠在一起。</p>
+          <p><b>AI：</b>我會針對 390px 寬度調整控制列，固定按鈕高度，讓標籤換行但不擠壓圖表。</p>
+        </div>
+      </section>
+
+      <section class="slide" data-title="常見失敗">
+        <p class="eyebrow">Failure Modes</p>
+        <h2>你的 skill 已經把常見失敗寫進去</h2>
+        <div class="cards">
+          <article><h3>改錯資料夾</h3><p>先看路徑、時間、Git 狀態與遠端 repo，再修改。</p></article>
+          <article><h3>Canvas 空白</h3><p>可見 first frame、tab activation redraw、resize redraw。</p></article>
+          <article><h3>RWD 假正常</h3><p>量 scrollHeight 與 viewport，不只目視檢查。</p></article>
+          <article><h3>單位漂移</h3><p>從 HTML、JS、README、metadata 到圖表標籤都要搜尋。</p></article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Git 觀念">
+        <p class="eyebrow">Version Control</p>
+        <h2>Git 是 Vibe Coding 的安全網</h2>
+        <div class="terminal">
+<pre><code>git status
+git diff --stat
+git add index.html styles.css script.js README.md
+git commit -m "Build interactive science lesson"
+git push origin main</code></pre>
+        </div>
+        <p class="note">重點不是背指令，而是每次只提交這次任務相關的檔案，保留可回溯紀錄。</p>
+      </section>
+
+      <section class="slide" data-title="GitHub Pages">
+        <p class="eyebrow">Deployment</p>
+        <h2>網頁佈署：GitHub Pages 最適合靜態教材</h2>
+        <ol class="steps">
+          <li>建立 GitHub repository。</li>
+          <li>把網站檔案推到 <code>main</code> 分支。</li>
+          <li>在 Settings → Pages 選擇來源為 <code>main</code> 與根目錄。</li>
+          <li>等待 Pages 建置完成。</li>
+          <li>打開網址並加上 <code>?v=日期時間</code> 確認不是舊快取。</li>
+        </ol>
+      </section>
+
+      <section class="slide" data-title="佈署檢查">
+        <p class="eyebrow">After Deploy</p>
+        <h2>線上成功不等於交付完成</h2>
+        <div class="check-panel">
+          <label><input type="checkbox" checked> 網頁能以公開網址開啟</label>
+          <label><input type="checkbox" checked> CSS 與 JS 都載入成功</label>
+          <label><input type="checkbox" checked> 手機寬度能正常操作</label>
+          <label><input type="checkbox" checked> 分享標題與描述正確</label>
+          <label><input type="checkbox" checked> README 記錄用途與更新方式</label>
+        </div>
+      </section>
+
+      <section class="slide" data-title="實作示範 Prompt">
+        <p class="eyebrow">Demo Prompt</p>
+        <h2>現場示範可以從這段開始</h2>
+        <div class="prompt-box">
+          <p>請依據我的 build-interactive-science-lesson skill，建立一個四年級自然課互動教材。主題是「保溫瓶如何減少熱散失」。第一屏要能直接操作三種保溫結構，學生可以切換材料、調整時間，看到溫度下降曲線。請建立 index.html、styles.css、script.js、README.md，並完成 RWD 與語法檢查。</p>
+        </div>
+      </section>
+
+      <section class="slide" data-title="示範分解">
+        <p class="eyebrow">Demo Breakdown</p>
+        <h2>把示範拆成 AI 能執行的小任務</h2>
+        <div class="table">
+          <div><strong>需求</strong><span>四年級、保溫瓶、熱散失、第一屏可操作。</span></div>
+          <div><strong>模型</strong><span>材料影響降溫速度，時間推進曲線。</span></div>
+          <div><strong>畫面</strong><span>瓶身剖面圖、材料切換、溫度圖表。</span></div>
+          <div><strong>驗證</strong><span>slider 能更新、圖表重繪、手機不重疊。</span></div>
+          <div><strong>佈署</strong><span>Git commit、push、Pages、線上驗證。</span></div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="人機分工">
+        <p class="eyebrow">Collaboration</p>
+        <h2>老師與 AI 的分工</h2>
+        <div class="compare">
+          <article>
+            <h3>人負責</h3>
+            <ul>
+              <li>判斷學習目標是否正確。</li>
+              <li>決定學生要觀察什麼。</li>
+              <li>指出畫面是否符合課堂情境。</li>
+              <li>確認語言與教學難度。</li>
+            </ul>
+          </article>
+          <article>
+            <h3>AI 負責</h3>
+            <ul>
+              <li>把需求轉成檔案與程式。</li>
+              <li>搜尋並修改一致的文字與單位。</li>
+              <li>重複執行檢查與修正。</li>
+              <li>整理 README、Git 與佈署流程。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" data-title="分享重點">
+        <p class="eyebrow">Takeaways</p>
+        <h2>聽眾最需要帶走的 5 件事</h2>
+        <ol class="steps">
+          <li>Vibe Coding 是可驗證的協作流程，不是神奇 prompt。</li>
+          <li>Skill 能把個人經驗轉成 AI 可遵守的工作規範。</li>
+          <li>互動教材要從「學生第一眼能操作」開始設計。</li>
+          <li>每一次修改都要跑檢查，尤其是 RWD、Canvas 與線上快取。</li>
+          <li>GitHub Pages 讓作品從本機檔案變成可分享教材。</li>
+        </ol>
+      </section>
+
+      <section class="slide" data-title="結尾">
+        <p class="eyebrow">Closing</p>
+        <h2>Vibe Coding 的真正價值：把想法變成可迭代作品</h2>
+        <p class="big">當我們把教學目標、設計偏好、驗證清單與佈署流程寫進 skill，AI 就不只是回答問題，而是成為能跟著你工作方式前進的製作夥伴。</p>
+        <div class="closing-grid">
+          <span>定義清楚</span>
+          <span>流程固定</span>
+          <span>工具到位</span>
+          <span>驗證扎實</span>
+          <span>公開分享</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="controls" aria-label="播放控制">
+      <button id="prevBtn" type="button" aria-label="上一頁">←</button>
+      <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+      <span id="counter">1 / 30</span>
+      <button id="nextBtn" type="button" aria-label="下一頁">→</button>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
