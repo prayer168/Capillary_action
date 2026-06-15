@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>森林裡的水循環：劃重點互動教材</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-copy">
+      <p class="eyebrow">自然閱讀策略</p>
+      <h1>森林裡的水循環</h1>
+      <p>先讀文章，再練習判斷哪些句子值得劃重點。學生可以切換示範、挑戰與檢核模式，學會「少量、準確、有理由」地標示重點。</p>
+    </div>
+    <div class="cycle-visual" aria-label="森林水循環示意圖" role="img">
+      <svg viewBox="0 0 560 360" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#d8f0ff"/>
+            <stop offset="1" stop-color="#f8fff4"/>
+          </linearGradient>
+        </defs>
+        <rect width="560" height="360" rx="24" fill="url(#sky)"/>
+        <path d="M0 255 C90 225 160 245 230 220 C325 185 420 205 560 165 L560 360 L0 360 Z" fill="#8ecf91"/>
+        <path d="M0 292 C105 268 205 282 300 260 C405 235 485 248 560 230 L560 360 L0 360 Z" fill="#4f9f66"/>
+        <g fill="#1f6f4a">
+          <path d="M85 242 l36 -72 l36 72z"/>
+          <path d="M130 250 l45 -90 l45 90z"/>
+          <path d="M385 240 l42 -84 l42 84z"/>
+          <path d="M435 252 l36 -72 l36 72z"/>
+        </g>
+        <g stroke="#7a4b25" stroke-width="12" stroke-linecap="round">
+          <path d="M121 246 v48"/>
+          <path d="M175 252 v52"/>
+          <path d="M427 246 v52"/>
+          <path d="M472 255 v44"/>
+        </g>
+        <path d="M78 308 C150 294 210 318 292 302 C370 287 430 310 506 292" fill="none" stroke="#327fc1" stroke-width="16" stroke-linecap="round"/>
+        <g class="rain" stroke="#1c7ed6" stroke-width="8" stroke-linecap="round">
+          <path d="M216 76 l-18 34"/>
+          <path d="M270 64 l-18 34"/>
+          <path d="M326 82 l-18 34"/>
+        </g>
+        <g class="vapor" fill="none" stroke="#2c8f6b" stroke-width="7" stroke-linecap="round">
+          <path d="M154 158 C134 130 176 120 154 91"/>
+          <path d="M415 152 C395 126 438 115 415 86"/>
+        </g>
+        <path class="arrow" d="M108 86 C210 22 350 20 452 86" fill="none" stroke="#d18b19" stroke-width="8" stroke-linecap="round"/>
+        <path d="M438 72 l22 18 l-28 8" fill="none" stroke="#d18b19" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar" aria-label="閱讀模式">
+      <div>
+        <h2>閱讀模式</h2>
+        <p>先用「空白文章」讀一次，再進入「自己練習」。最後打開「示範重點」比較你的判斷。</p>
+      </div>
+      <div class="mode-buttons" role="group" aria-label="切換模式">
+        <button class="mode-button is-active" type="button" data-mode="plain">空白文章</button>
+        <button class="mode-button" type="button" data-mode="practice">自己練習</button>
+        <button class="mode-button" type="button" data-mode="demo">示範重點</button>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <aside class="guide-panel" aria-label="劃重點策略">
+        <h2>劃重點策略</h2>
+        <ol>
+          <li>先找每段最重要的一句話。</li>
+          <li>標出自然現象的原因和結果。</li>
+          <li>例子只標能幫助理解的部分。</li>
+          <li>整篇文章以 5 到 8 個重點為目標。</li>
+        </ol>
+
+        <div class="legend">
+          <h3>示範顏色</h3>
+          <p><span class="swatch key"></span>紅色：主概念或結論</p>
+          <p><span class="swatch process"></span>藍色：原因、過程、因果</p>
+          <p><span class="swatch example"></span>綠色：具體例子</p>
+          <p><span class="swatch action"></span>黃色：生活行動</p>
+        </div>
+
+        <div class="score-box" aria-live="polite">
+          <span>練習得分</span>
+          <strong id="scoreText">尚未檢核</strong>
+        </div>
+      </aside>
+
+      <article class="article-panel" aria-label="森林裡的水循環文章">
+        <h2>森林裡的水循環</h2>
+        <p>走進森林時，我們常會覺得空氣比較涼爽、濕潤，這和森林中的水循環有密切關係。森林<span class="highlight key" data-answer="true" data-type="主概念">像一座天然水庫，能把雨水留下、儲存，再慢慢釋放到環境中</span>。</p>
+        <p>下雨時，雨水最先碰到樹葉和樹枝。茂密的樹冠會攔住一部分雨水，讓雨滴不會直接打在地面上。這樣可以<span class="highlight process" data-answer="true" data-type="過程">減少土壤被沖刷，也能讓雨水比較緩慢地流向地面</span>。留在葉片上的水，有些會蒸發回空氣中，有些則沿著樹幹或葉尖滴落。</p>
+        <p>森林地面常覆蓋著枯枝、落葉和腐植質。這些物質<span class="highlight example" data-answer="true" data-type="例子">像海綿一樣，能吸收並保存水分</span>。雨水穿過落葉層後，會慢慢滲入土壤。健康的森林土壤有許多小孔隙，能幫助水往地下移動。</p>
+        <p>植物的根會吸收土壤中的水分，再把水送到莖和葉。白天陽光照射時，葉片上的氣孔打開，部分水分變成水蒸氣散到空氣中，這個過程稱為<span class="highlight key" data-answer="true" data-type="主概念">蒸散作用</span>。蒸散作用能增加水氣、帶走熱量，所以森林附近的氣溫通常比較穩定。</p>
+        <p>沒有被植物吸收的水，可能繼續往地下滲透，成為地下水。地下水流動很慢，卻能在乾旱時補充溪流和泉水。因此，<span class="highlight example" data-answer="true" data-type="例子">有些森林裡的溪水即使好幾天沒有下雨，仍然可以持續流動</span>。這表示森林能在雨季存水，也能在乾季供水。</p>
+        <p>如果森林被大量砍伐，水循環就會被破壞。少了樹冠和落葉層，雨水會快速沖刷地面，造成土壤流失；少了樹根固定土壤，大雨時也比較容易發生溪水暴漲或土石流。這一段提醒我們：<span class="highlight key" data-answer="true" data-type="主概念">森林健康和水資源安全有密切關係</span>。</p>
+        <p>了解森林裡的水循環，可以讓我們明白保護森林的重要。<span class="highlight action" data-answer="true" data-type="行動">節約用水、減少浪費紙張、支持植樹和保護棲地</span>，都是幫助森林維持水循環的方法。</p>
+      </article>
+
+      <section class="practice-panel" aria-label="練習檢核">
+        <h2>練習檢核</h2>
+        <p id="practiceHint">切換到「自己練習」後，點選你認為應該劃重點的文字，再按下檢核。</p>
+        <div class="practice-actions">
+          <button type="button" id="checkButton">檢核答案</button>
+          <button type="button" id="resetButton" class="secondary">重新練習</button>
+        </div>
+        <div id="feedback" class="feedback" aria-live="polite">尚未開始檢核。</div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>教師使用建議：讓學生先讀空白文章並自行標記，再比較示範版，討論「為什麼這一句值得標」。</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
