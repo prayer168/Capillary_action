@@ -6,6 +6,12 @@ const resetButton = document.querySelector("#resetButton");
 const scoreText = document.querySelector("#scoreText");
 const feedback = document.querySelector("#feedback");
 const practiceHint = document.querySelector("#practiceHint");
+const gridCells = document.querySelectorAll(".grid-cell");
+const gridDetail = document.querySelector("#gridDetail");
+const mapNodes = document.querySelectorAll(".map-node");
+const mapDetail = document.querySelector("#mapDetail");
+const quizForm = document.querySelector("#quizForm");
+const quizResult = document.querySelector("#quizResult");
 
 function setMode(mode) {
   body.dataset.mode = mode;
@@ -50,11 +56,11 @@ function checkAnswers() {
 
   scoreText.textContent = `${correct} / ${total}`;
   if (correct === total) {
-    feedback.textContent = "很準確！你選到所有示範重點。下一步可以說明每個重點屬於主概念、過程、例子或行動。";
+    feedback.textContent = "全部選到。下一步請說明每個重點屬於主概念、過程、例子或行動。";
   } else if (correct >= 5) {
-    feedback.textContent = "已經抓到多數重點。紅色提示代表容易漏掉的關鍵句，可以回頭看看它和段落主旨的關係。";
+    feedback.textContent = "已抓到多數重點。紅色提示是漏掉的關鍵句，回頭看它和段落主旨的關係。";
   } else {
-    feedback.textContent = "先不要急著標很多字。試著每段只選一個最能代表段落意思的詞句，再重新檢核。";
+    feedback.textContent = "先縮小範圍。每段只選最能代表段落意思的一句或一個詞，再重新檢核。";
   }
 }
 
@@ -66,6 +72,43 @@ function resetPractice() {
   scoreText.textContent = "尚未檢核";
   feedback.textContent = "尚未開始檢核。";
   setMode("practice");
+}
+
+function activateGridCell(cell) {
+  gridCells.forEach((item) => item.classList.remove("is-active"));
+  cell.classList.add("is-active");
+  gridDetail.textContent = cell.dataset.detail;
+}
+
+function activateMapNode(node) {
+  mapNodes.forEach((item) => item.classList.remove("is-active"));
+  node.classList.add("is-active");
+  mapDetail.textContent = node.dataset.map;
+}
+
+function checkQuiz(event) {
+  event.preventDefault();
+  const formData = new FormData(quizForm);
+  const answers = ["q1", "q2", "q3"];
+  let answered = 0;
+  let score = 0;
+
+  answers.forEach((key) => {
+    const value = formData.get(key);
+    if (value !== null) answered += 1;
+    if (value === "1") score += 1;
+  });
+
+  if (answered < answers.length) {
+    quizResult.textContent = "還有題目尚未作答。";
+    return;
+  }
+
+  if (score === answers.length) {
+    quizResult.textContent = "3 / 3。概念清楚：你能連結樹冠、蒸散作用與森林保水。";
+  } else {
+    quizResult.textContent = `${score} / 3。請回到九宮格和心智圖，重新確認「水速變化」與「植物如何參與水循環」。`;
+  }
 }
 
 modeButtons.forEach((button) => {
@@ -82,7 +125,16 @@ highlights.forEach((item) => {
   });
 });
 
+gridCells.forEach((cell) => {
+  cell.addEventListener("click", () => activateGridCell(cell));
+});
+
+mapNodes.forEach((node) => {
+  node.addEventListener("click", () => activateMapNode(node));
+});
+
 checkButton.addEventListener("click", checkAnswers);
 resetButton.addEventListener("click", resetPractice);
+quizForm.addEventListener("submit", checkQuiz);
 
 setMode("plain");
