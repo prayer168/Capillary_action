@@ -43,8 +43,6 @@ def make_nine_grid():
             x = left + col * size
             y = bottom + (2 - row) * size
             c.rect(x, y, size, size)
-    c.setFont(FONT_NAME, 18)
-    c.drawCentredString(left + 1.5 * size, bottom + 1.5 * size - 8, "主題")
     c.setFont(FONT_NAME, 12)
     c.drawString(42, 52, "整理提醒：每格只寫一個關鍵概念，再補一句說明。避免直接抄整段文章。")
     c.save()
@@ -57,24 +55,22 @@ def make_mind_map():
     width, height = draw_header(c, "空白心智圖學習單")
     center_x, center_y = width / 2, height / 2 - 12
     boxes = [
-        (center_x, center_y, "主題"),
-        (150, height - 170, "概念"),
-        (width - 150, height - 170, "概念"),
-        (150, 150, "概念"),
-        (width - 150, 150, "概念"),
-        (center_x, height - 155, "概念"),
-        (center_x, 122, "概念"),
+        (center_x, center_y),
+        (150, height - 170),
+        (width - 150, height - 170),
+        (150, 150),
+        (width - 150, 150),
+        (center_x, height - 155),
+        (center_x, 122),
     ]
     c.setLineWidth(1.4)
-    for x, y, _ in boxes[1:]:
+    for x, y in boxes[1:]:
         c.line(center_x, center_y, x, y)
-    for x, y, label in boxes:
+    for x, y in boxes:
         c.setFillColor(colors.white)
         c.setStrokeColor(colors.black)
         c.roundRect(x - 68, y - 28, 136, 56, 12, stroke=1, fill=1)
         c.setFillColor(colors.black)
-        c.setFont(FONT_NAME, 15)
-        c.drawCentredString(x, y - 6, label)
     c.setFont(FONT_NAME, 12)
     c.drawString(42, 52, "整理提醒：在連線旁補上關係詞，例如：造成、幫助、影響、補充、需要。")
     c.save()
