@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>應用與範例 - 自然學習重點整理</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-header">
+    <nav class="top-nav" aria-label="主要導覽">
+      <a href="index.html">首頁</a>
+      <a href="reading.html">閱讀劃重點</a>
+      <a href="grid.html">九宮格</a>
+      <a href="mindmap.html">心智圖</a>
+      <a aria-current="page" href="applications.html">應用範例</a>
+      <a href="references.html">參考資料</a>
+      <a href="downloads.html">學習單下載</a>
+    </nav>
+    <div class="page-title">
+      <p class="eyebrow">Step 4</p>
+      <h1>應用與範例</h1>
+      <p>把森林水循環概念放回生活情境，判斷水可能往哪裡去，以及森林是否提供緩衝。</p>
+    </div>
+  </header>
+  <main>
+    <section class="section">
+      <div class="application-list">
+        <article>
+          <h2>校園大雨後</h2>
+          <p>有草地、落葉和樹根的區域，積水通常較慢形成。可觀察雨水是滲入土壤、流向水溝，還是停在硬鋪面。</p>
+        </article>
+        <article>
+          <h2>山坡地開發</h2>
+          <p>如果樹木和落葉層減少，雨水更容易快速流下坡面。討論重點是「水速變快」和「土壤固定力變弱」。</p>
+        </article>
+        <article>
+          <h2>乾旱時的溪流</h2>
+          <p>森林土壤與地下水能慢慢補充溪流。若上游森林健康，溪水較有機會維持基本流量。</p>
+        </article>
+        <article>
+          <h2>家庭節水</h2>
+          <p>節水不是只省水費，也是在降低水資源系統壓力。可延伸討論洗手、澆花、回收水的做法。</p>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">概念檢核</p>
+        <h2>三題快速測驗</h2>
+        <p>選出最合理的答案，檢查是否真正理解森林水循環。</p>
+      </div>
+      <form class="quiz" id="quizForm">
+        <fieldset>
+          <legend>1. 為什麼樹冠可以減少土壤沖刷？</legend>
+          <label><input type="radio" name="q1" value="0"> 因為樹冠會讓雨水消失</label>
+          <label><input type="radio" name="q1" value="1"> 因為樹冠能攔住部分雨水，降低雨滴直接衝擊地面的力量</label>
+          <label><input type="radio" name="q1" value="0"> 因為樹冠會把雨水變成鹽水</label>
+        </fieldset>
+        <fieldset>
+          <legend>2. 蒸散作用和水循環的關係是什麼？</legend>
+          <label><input type="radio" name="q2" value="1"> 植物把水分以水蒸氣形式送回空氣中</label>
+          <label><input type="radio" name="q2" value="0"> 植物把水永久鎖在葉子裡</label>
+          <label><input type="radio" name="q2" value="0"> 植物只會吸收水，不會釋放水</label>
+        </fieldset>
+        <fieldset>
+          <legend>3. 森林被大量砍伐後，最可能發生什麼變化？</legend>
+          <label><input type="radio" name="q3" value="1"> 雨水更快流走，土壤也更容易流失</label>
+          <label><input type="radio" name="q3" value="0"> 地下水一定立刻增加</label>
+          <label><input type="radio" name="q3" value="0"> 溪水一定永遠不會變少</label>
+        </fieldset>
+        <button type="submit">送出檢核</button>
+        <p class="feedback" id="quizResult" aria-live="polite">尚未作答。</p>
+      </form>
+    </section>
+    <nav class="next-nav" aria-label="下一步">
+      <a href="references.html">下一步：參考資料</a>
+    </nav>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -14,6 +14,8 @@ const quizForm = document.querySelector("#quizForm");
 const quizResult = document.querySelector("#quizResult");
 
 function setMode(mode) {
+  if (!modeButtons.length) return;
+
   body.dataset.mode = mode;
   modeButtons.forEach((button) => {
     button.classList.toggle("is-active", button.dataset.mode === mode);
@@ -25,6 +27,8 @@ function setMode(mode) {
     item.setAttribute("role", isPractice ? "button" : "text");
     item.setAttribute("aria-pressed", isPractice && item.classList.contains("is-selected") ? "true" : "false");
   });
+
+  if (!practiceHint) return;
 
   if (mode === "plain") {
     practiceHint.textContent = "這是空白文章。請先完整閱讀，再想一想每段最重要的是什麼。";
@@ -54,7 +58,9 @@ function checkAnswers() {
     if (selected) correct += 1;
   });
 
-  scoreText.textContent = `${correct} / ${total}`;
+  if (scoreText) scoreText.textContent = `${correct} / ${total}`;
+  if (!feedback) return;
+
   if (correct === total) {
     feedback.textContent = "全部選到。下一步請說明每個重點屬於主概念、過程、例子或行動。";
   } else if (correct >= 5) {
@@ -69,21 +75,21 @@ function resetPractice() {
     item.classList.remove("is-selected", "is-correct", "is-missed");
     item.setAttribute("aria-pressed", "false");
   });
-  scoreText.textContent = "尚未檢核";
-  feedback.textContent = "尚未開始檢核。";
+  if (scoreText) scoreText.textContent = "尚未檢核";
+  if (feedback) feedback.textContent = "尚未開始檢核。";
   setMode("practice");
 }
 
 function activateGridCell(cell) {
   gridCells.forEach((item) => item.classList.remove("is-active"));
   cell.classList.add("is-active");
-  gridDetail.textContent = cell.dataset.detail;
+  if (gridDetail) gridDetail.textContent = cell.dataset.detail;
 }
 
 function activateMapNode(node) {
   mapNodes.forEach((item) => item.classList.remove("is-active"));
   node.classList.add("is-active");
-  mapDetail.textContent = node.dataset.map;
+  if (mapDetail) mapDetail.textContent = node.dataset.map;
 }
 
 function checkQuiz(event) {
@@ -98,6 +104,8 @@ function checkQuiz(event) {
     if (value !== null) answered += 1;
     if (value === "1") score += 1;
   });
+
+  if (!quizResult) return;
 
   if (answered < answers.length) {
     quizResult.textContent = "還有題目尚未作答。";
@@ -133,8 +141,8 @@ mapNodes.forEach((node) => {
   node.addEventListener("click", () => activateMapNode(node));
 });
 
-checkButton.addEventListener("click", checkAnswers);
-resetButton.addEventListener("click", resetPractice);
-quizForm.addEventListener("submit", checkQuiz);
+if (checkButton) checkButton.addEventListener("click", checkAnswers);
+if (resetButton) resetButton.addEventListener("click", resetPractice);
+if (quizForm) quizForm.addEventListener("submit", checkQuiz);
 
 setMode("plain");

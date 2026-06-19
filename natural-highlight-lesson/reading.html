@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>閱讀劃重點 - 自然學習重點整理</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-mode="plain">
+  <header class="page-header">
+    <nav class="top-nav" aria-label="主要導覽">
+      <a href="index.html">首頁</a>
+      <a aria-current="page" href="reading.html">閱讀劃重點</a>
+      <a href="grid.html">九宮格</a>
+      <a href="mindmap.html">心智圖</a>
+      <a href="applications.html">應用範例</a>
+      <a href="references.html">參考資料</a>
+      <a href="downloads.html">學習單下載</a>
+    </nav>
+    <div class="page-title">
+      <p class="eyebrow">Step 1</p>
+      <h1>閱讀劃重點</h1>
+      <p>以森林水循環文章練習「少量、準確、有理由」的劃重點方法。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="toolbar" aria-label="閱讀模式">
+        <div class="mode-buttons" role="group" aria-label="切換閱讀模式">
+          <button class="mode-button is-active" type="button" data-mode="plain">空白文章</button>
+          <button class="mode-button" type="button" data-mode="practice">自己練習</button>
+          <button class="mode-button" type="button" data-mode="demo">示範重點</button>
+        </div>
+        <p id="practiceHint">這是空白文章。請先完整閱讀，再想一想每段最重要的是什麼。</p>
+      </div>
+
+      <div class="reading-layout">
+        <aside class="guide-panel" aria-label="劃重點策略">
+          <h2>劃重點規則</h2>
+          <ol>
+            <li>每段最多標一到兩個重點。</li>
+            <li>優先找主概念、原因、結果。</li>
+            <li>例子只標能幫助理解的部分。</li>
+            <li>整篇文章以 5 到 8 個重點為目標。</li>
+          </ol>
+          <div class="legend">
+            <p><span class="swatch key"></span>主概念或結論</p>
+            <p><span class="swatch process"></span>原因、過程、因果</p>
+            <p><span class="swatch example"></span>具體例子</p>
+            <p><span class="swatch action"></span>生活行動</p>
+          </div>
+          <div class="score-box" aria-live="polite">
+            <span>練習得分</span>
+            <strong id="scoreText">尚未檢核</strong>
+          </div>
+        </aside>
+
+        <article class="article-panel" aria-label="森林水循環文章">
+          <h2>森林裡的水循環</h2>
+          <p>走進森林時，我們常會覺得空氣比較涼爽、濕潤，這和森林中的水循環有密切關係。森林<span class="highlight key" data-type="主概念">像一座天然水庫，能把雨水留下、儲存，再慢慢釋放到環境中</span>。</p>
+          <p>下雨時，雨水最先碰到樹葉和樹枝。茂密的樹冠會攔住一部分雨水，讓雨滴不會直接打在地面上。這樣可以<span class="highlight process" data-type="過程">減少土壤被沖刷，也能讓雨水比較緩慢地流向地面</span>。留在葉片上的水，有些會蒸發回空氣中，有些則沿著樹幹或葉尖滴落。</p>
+          <p>森林地面常覆蓋著枯枝、落葉和腐植質。這些物質<span class="highlight example" data-type="例子">像海綿一樣，能吸收並保存水分</span>。雨水穿過落葉層後，會慢慢滲入土壤。健康的森林土壤有許多小孔隙，能幫助水往地下移動。</p>
+          <p>植物的根會吸收土壤中的水分，再把水送到莖和葉。白天陽光照射時，葉片上的氣孔打開，部分水分變成水蒸氣散到空氣中，這個過程稱為<span class="highlight key" data-type="主概念">蒸散作用</span>。蒸散作用能增加水氣、帶走熱量，所以森林附近的氣溫通常比較穩定。</p>
+          <p>沒有被植物吸收的水，可能繼續往地下滲透，成為地下水。地下水流動很慢，卻能在乾旱時補充溪流和泉水。因此，<span class="highlight example" data-type="例子">有些森林裡的溪水即使好幾天沒有下雨，仍然可以持續流動</span>。這表示森林能在雨季存水，也能在乾季供水。</p>
+          <p>如果森林被大量砍伐，水循環就會被破壞。少了樹冠和落葉層，雨水會快速沖刷地面，造成土壤流失；少了樹根固定土壤，大雨時也比較容易發生溪水暴漲或土石流。這一段提醒我們：<span class="highlight key" data-type="主概念">森林健康和水資源安全有密切關係</span>。</p>
+          <p>了解森林裡的水循環，可以讓我們明白保護森林的重要。<span class="highlight action" data-type="行動">節約用水、減少浪費紙張、支持植樹和保護棲地</span>，都是幫助森林維持水循環的方法。</p>
+        </article>
+
+        <section class="practice-panel" aria-label="練習檢核">
+          <div>
+            <h2>檢核結果</h2>
+            <p id="feedback" class="feedback" aria-live="polite">尚未開始檢核。</p>
+          </div>
+          <div class="practice-actions">
+            <button type="button" id="checkButton">檢核答案</button>
+            <button type="button" id="resetButton" class="secondary">重新練習</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <nav class="next-nav" aria-label="下一步">
+      <a href="grid.html">下一步：九宮格整理</a>
+    </nav>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

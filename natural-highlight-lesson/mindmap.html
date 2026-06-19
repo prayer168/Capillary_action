@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>心智圖整理 - 自然學習重點整理</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-header">
+    <nav class="top-nav" aria-label="主要導覽">
+      <a href="index.html">首頁</a>
+      <a href="reading.html">閱讀劃重點</a>
+      <a href="grid.html">九宮格</a>
+      <a aria-current="page" href="mindmap.html">心智圖</a>
+      <a href="applications.html">應用範例</a>
+      <a href="references.html">參考資料</a>
+      <a href="downloads.html">學習單下載</a>
+    </nav>
+    <div class="page-title">
+      <p class="eyebrow">Step 3</p>
+      <h1>心智圖整理</h1>
+      <p>心智圖用來整理概念之間的因果、功能與應用關係。</p>
+    </div>
+  </header>
+  <main>
+    <section class="section">
+      <div class="mindmap-board">
+        <svg class="mindmap-lines" viewBox="0 0 900 520" aria-hidden="true">
+          <line x1="450" y1="260" x2="180" y2="120"/>
+          <line x1="450" y1="260" x2="720" y2="120"/>
+          <line x1="450" y1="260" x2="180" y2="390"/>
+          <line x1="450" y1="260" x2="720" y2="390"/>
+          <line x1="450" y1="260" x2="450" y2="80"/>
+          <line x1="450" y1="260" x2="450" y2="440"/>
+        </svg>
+        <button class="map-node center-node" type="button" data-map="森林水循環把雨水、植物、土壤、地下水和溪流連成一個系統。">森林水循環</button>
+        <button class="map-node node-a" type="button" data-map="樹冠截留讓雨水慢下來，是防止土壤被快速沖刷的第一道緩衝。">樹冠截留</button>
+        <button class="map-node node-b" type="button" data-map="蒸散作用讓植物把水分送回大氣，也會影響森林附近的小氣候。">蒸散作用</button>
+        <button class="map-node node-c" type="button" data-map="落葉與腐植質可增加保水能力，讓雨水有時間滲入土壤。">落葉層</button>
+        <button class="map-node node-d" type="button" data-map="地下水能在無雨時補充溪流，使森林溪水比較穩定。">地下水</button>
+        <button class="map-node node-e" type="button" data-map="大雨、乾旱和砍伐會改變水的速度與去向，造成土壤流失或溪流乾涸。">環境改變</button>
+        <button class="map-node node-f" type="button" data-map="節約用水、減少紙張浪費、植樹和保護棲地，都是維持水循環的行動。">保護行動</button>
+      </div>
+      <p class="detail-box" id="mapDetail" aria-live="polite">點選任一心智圖節點，查看關係說明。</p>
+    </section>
+    <section class="section split">
+      <div>
+        <h2>如何使用空白心智圖</h2>
+        <p>中心寫主題，分支寫關鍵概念，再用箭頭旁的短句說明關係，例如「造成」「幫助」「補充」「影響」。</p>
+      </div>
+      <a class="button-link" href="downloads/blank-mind-map.pdf" download>下載空白心智圖 PDF</a>
+    </section>
+    <nav class="next-nav" aria-label="下一步">
+      <a href="applications.html">下一步：應用與範例</a>
+    </nav>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -23,10 +23,6 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
   color: var(--ink);
@@ -39,7 +35,8 @@ a {
   color: inherit;
 }
 
-button {
+button,
+.button-link {
   min-height: 44px;
   border: 0;
   border-radius: 8px;
@@ -48,6 +45,8 @@ button {
   background: var(--forest);
   font: inherit;
   font-weight: 700;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -59,12 +58,14 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
-.secondary {
+.secondary,
+.button-link.secondary {
   color: var(--forest);
   background: #dfe9df;
 }
 
-.site-header {
+.site-header,
+.page-header {
   color: white;
   background: linear-gradient(135deg, #173a30, #2f6a49);
 }
@@ -91,6 +92,11 @@ input:focus-visible {
   background: rgba(255, 255, 255, 0.12);
 }
 
+.top-nav a[aria-current="page"] {
+  color: #1d1f1f;
+  background: #ffe5a6;
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
@@ -104,19 +110,26 @@ input:focus-visible {
   max-width: 700px;
 }
 
+.page-title {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 42px 0 48px;
+}
+
 .eyebrow {
   margin: 0 0 10px;
   color: #a05f00;
   font-weight: 800;
 }
 
-.site-header .eyebrow {
+.site-header .eyebrow,
+.page-header .eyebrow {
   color: #ffe5a6;
 }
 
 h1 {
   margin: 0 0 16px;
-  font-size: clamp(2.35rem, 6vw, 5.4rem);
+  font-size: clamp(2.25rem, 6vw, 5.2rem);
   line-height: 1.08;
   letter-spacing: 0;
 }
@@ -128,11 +141,20 @@ h3 {
   letter-spacing: 0;
 }
 
-.hero-copy p:last-child {
-  max-width: 620px;
+.hero-copy p:last-child,
+.page-title p:last-child {
+  max-width: 720px;
   margin: 0;
   color: #edf8f0;
   font-size: 1.15rem;
+}
+
+.hero-actions,
+.download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
 }
 
 .cycle-visual svg {
@@ -181,9 +203,62 @@ main {
 .guide-panel p,
 .practice-panel p,
 footer p,
-.reference-list span {
+.reference-list span,
+.flow-card p,
+.summary-list p,
+.download-card p {
   margin: 0;
   color: var(--muted);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.45fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.flow-grid,
+.application-list,
+.reference-list,
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.flow-card,
+.application-list article,
+.reference-list a,
+.download-card,
+.summary-list {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbf8ef;
+  text-decoration: none;
+}
+
+.flow-card span {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  color: white;
+  background: var(--forest);
+  font-weight: 800;
+}
+
+.flow-card strong,
+.reference-list strong {
+  color: var(--forest);
+}
+
+.download-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .toolbar {
@@ -296,7 +371,7 @@ footer p,
   background: var(--paper);
 }
 
-.article-panel h3 {
+.article-panel h2 {
   color: var(--forest);
   font-size: clamp(1.45rem, 3vw, 2.2rem);
 }
@@ -458,37 +533,6 @@ body[data-mode="practice"] .highlight.is-missed {
   box-shadow: 0 0 0 4px rgba(213, 141, 29, 0.22);
 }
 
-.application-list,
-.reference-list {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.application-list article,
-.reference-list a {
-  display: grid;
-  gap: 8px;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fbf8ef;
-}
-
-.application-list h3,
-.application-list p {
-  margin: 0;
-}
-
-.reference-list a {
-  grid-template-rows: auto 1fr;
-  text-decoration: none;
-}
-
-.reference-list strong {
-  color: var(--forest);
-}
-
 .quiz {
   display: grid;
   gap: 14px;
@@ -520,6 +564,21 @@ input {
   margin-top: 0.55em;
 }
 
+.next-nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.next-nav a {
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: white;
+  background: var(--forest);
+  text-decoration: none;
+  font-weight: 800;
+}
+
 footer {
   display: flex;
   justify-content: center;
@@ -533,14 +592,75 @@ footer {
   background: var(--paper);
 }
 
-footer a {
-  color: var(--forest);
+.worksheet-page {
+  background: white;
+}
+
+.worksheet {
+  width: min(980px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.worksheet-head {
+  margin-bottom: 18px;
+  border-bottom: 3px solid #222;
+}
+
+.worksheet-head h1 {
+  margin-bottom: 8px;
+  font-size: 2rem;
+  color: #111;
+}
+
+.worksheet-head p {
+  margin: 0 0 12px;
+  color: #222;
+}
+
+.blank-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid #222;
+}
+
+.blank-grid div {
+  min-height: 170px;
+  border: 1px solid #222;
+  padding: 10px;
   font-weight: 800;
 }
 
+.blank-grid .center {
+  display: grid;
+  place-items: center;
+  color: #555;
+  font-size: 1.4rem;
+}
+
+.blank-map {
+  border: 2px solid #222;
+  padding: 16px;
+}
+
+.blank-map svg {
+  width: 100%;
+  height: auto;
+}
+
+.worksheet-note {
+  margin-top: 18px;
+  padding: 12px;
+  border: 2px solid #222;
+}
+
 @media (max-width: 920px) {
-  .hero {
+  .hero,
+  .split {
     grid-template-columns: 1fr;
+  }
+
+  .hero {
     min-height: auto;
     padding-top: 28px;
   }
@@ -563,6 +683,7 @@ footer a {
     grid-template-columns: 1fr;
   }
 
+  .flow-grid,
   .application-list,
   .reference-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -570,7 +691,11 @@ footer a {
 }
 
 @media (max-width: 680px) {
-  .grid-nine {
+  .grid-nine,
+  .download-grid,
+  .flow-grid,
+  .application-list,
+  .reference-list {
     grid-template-columns: 1fr;
   }
 
@@ -600,18 +725,26 @@ footer a {
     position: static;
     width: 100%;
   }
+}
 
-  .application-list,
-  .reference-list {
-    grid-template-columns: 1fr;
+@media print {
+  body {
+    background: white;
+  }
+
+  .top-nav,
+  .next-nav,
+  footer {
+    display: none;
+  }
+
+  .worksheet {
+    width: 100%;
+    padding: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .rain,
   .vapor,
   .arrow {
