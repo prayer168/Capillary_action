@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEL 社會情緒學習互動教材中心</title>
+  <style>
+    :root {
+      --ink: #263238;
+      --muted: #60717a;
+      --bg: #f7f1e8;
+      --surface: #ffffff;
+      --surface-soft: #f4faf7;
+      --line: #d6e1dc;
+      --teal: #3f8f86;
+      --teal-dark: #24645f;
+      --coral: #d8665b;
+      --gold: #d7a842;
+      --sky: #5f91aa;
+      --leaf: #6aa76f;
+      --violet: #8a7ab6;
+      --shadow: 0 14px 34px rgba(48, 67, 70, .12);
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 226, 181, .56), transparent 24rem),
+        linear-gradient(130deg, #fff8ed 0%, #eef8f3 54%, #edf4f7 100%);
+      line-height: 1.6;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #2f7598;
+      outline-offset: 3px;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 250, 242, .92);
+      border-bottom: 1px solid rgba(54, 89, 89, .14);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 68px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #e5f4ee;
+      border: 1px solid #c5ded5;
+      color: var(--teal-dark);
+    }
+
+    .brand-mark::before {
+      content: "";
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 16px 0 0 var(--gold), 8px 15px 0 var(--leaf);
+      transform: translateX(-8px);
+    }
+
+    .nav-link {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #43555d;
+      font-weight: 800;
+    }
+
+    .nav-link:hover {
+      background: #e9f4ef;
+    }
+
+    .hero {
+      padding: 44px 0 26px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(300px, 1.05fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--teal-dark);
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.05rem, 5vw, 4.55rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: #4c5f66;
+      font-size: clamp(1.05rem, 2vw, 1.26rem);
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      min-height: 110px;
+      padding: 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .76);
+      border: 1px solid rgba(69, 108, 111, .16);
+      box-shadow: 0 10px 24px rgba(49, 70, 73, .08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 2rem;
+      line-height: 1.05;
+      color: var(--teal-dark);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .toolbar {
+      padding: 18px 0;
+      background: rgba(255, 255, 255, .72);
+      border-top: 1px solid rgba(255, 255, 255, .7);
+      border-bottom: 1px solid rgba(52, 83, 83, .12);
+    }
+
+    .toolbar-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr);
+      gap: 16px;
+      align-items: center;
+    }
+
+    .search {
+      position: relative;
+    }
+
+    .search::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #6d8389;
+      border-radius: 50%;
+      transform: translateY(-60%);
+    }
+
+    .search::after {
+      content: "";
+      position: absolute;
+      left: 28px;
+      top: 33px;
+      width: 9px;
+      height: 2px;
+      background: #6d8389;
+      transform: rotate(45deg);
+      transform-origin: left center;
+    }
+
+    .search input {
+      width: 100%;
+      min-height: 50px;
+      padding: 10px 14px 10px 44px;
+      border: 1px solid #c8d9d4;
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .filter-btn {
+      min-height: 44px;
+      padding: 9px 13px;
+      border: 1px solid #c8d9d4;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #43555b;
+      font-weight: 900;
+    }
+
+    .filter-btn[aria-pressed="true"] {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff;
+    }
+
+    main {
+      padding: 28px 0 56px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .side-panel {
+      position: sticky;
+      top: 92px;
+      padding: 18px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .82);
+      border: 1px solid rgba(62, 102, 104, .14);
+      box-shadow: 0 12px 28px rgba(55, 72, 75, .08);
+    }
+
+    .side-panel h2,
+    .section-title {
+      margin: 0 0 14px;
+      font-size: clamp(1.35rem, 2.6vw, 2rem);
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .path-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .path-list button {
+      width: 100%;
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #d4e1dc;
+      border-radius: 8px;
+      background: #f9fcfb;
+      color: var(--ink);
+      text-align: left;
+      font-weight: 900;
+    }
+
+    .path-list button[aria-pressed="true"] {
+      border-color: var(--teal);
+      background: #e6f4ef;
+      box-shadow: inset 4px 0 0 var(--teal);
+    }
+
+    .path-index {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #e9f2ef;
+      color: var(--teal-dark);
+      font-weight: 900;
+    }
+
+    .content {
+      display: grid;
+      gap: 22px;
+    }
+
+    .module-section {
+      scroll-margin-top: 96px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .resource-card {
+      min-height: 242px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(50, 75, 76, .08);
+    }
+
+    .resource-card[data-status="ready"] {
+      border-color: #aacdc3;
+      box-shadow: inset 0 5px 0 var(--teal), 0 10px 24px rgba(50, 75, 76, .08);
+    }
+
+    .resource-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 8px;
+      font-size: 1.22rem;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #edf5f1;
+      color: var(--teal-dark);
+      font-size: .82rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .tag.plan {
+      background: #f4eee2;
+      color: #7c5a1d;
+    }
+
+    .resource-card p {
+      margin: 0;
+      color: #566971;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .skills span {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #f3f8f6;
+      border: 1px solid #d8e6e1;
+      color: #52656a;
+      font-size: .86rem;
+      font-weight: 800;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 11px;
+      border-radius: 8px;
+      border: 1px solid #c7d8d3;
+      background: #f9fcfb;
+      color: #33494f;
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .action.primary {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .action[aria-disabled="true"] {
+      color: #7a8589;
+      background: #eef2f1;
+      cursor: not-allowed;
+    }
+
+    .action-icon {
+      width: 18px;
+      height: 18px;
+      position: relative;
+      display: inline-block;
+      flex: 0 0 auto;
+    }
+
+    .action-icon.open::before {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border: 2px solid currentColor;
+      border-radius: 3px;
+    }
+
+    .action-icon.open::after {
+      content: "";
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .action-icon.info::before {
+      content: "i";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .teacher-zone {
+      padding: 26px 0;
+      background: rgba(255, 255, 255, .72);
+      border-top: 1px solid rgba(255, 255, 255, .7);
+      border-bottom: 1px solid rgba(52, 83, 83, .12);
+    }
+
+    .teacher-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .teacher-item {
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 8px 22px rgba(55, 76, 77, .07);
+    }
+
+    .teacher-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.18rem;
+      letter-spacing: 0;
+    }
+
+    .teacher-item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .detail-panel {
+      position: fixed;
+      inset: auto 18px 18px auto;
+      z-index: 20;
+      width: min(430px, calc(100% - 36px));
+      padding: 18px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid #c8d9d4;
+      box-shadow: 0 20px 60px rgba(36, 55, 58, .22);
+    }
+
+    .detail-panel[hidden] {
+      display: none;
+    }
+
+    .detail-panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      letter-spacing: 0;
+    }
+
+    .detail-panel p {
+      margin: 0 0 12px;
+      color: #4f6269;
+    }
+
+    .detail-close {
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 8px;
+      background: #455b61;
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .empty {
+      padding: 22px;
+      border: 1px dashed #b8cbc5;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .7);
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    @media (max-width: 1040px) {
+      .hero-layout,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        position: static;
+      }
+
+      .path-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cards,
+      .teacher-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .wrap {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .quick-stats,
+      .toolbar-grid,
+      .path-list,
+      .cards,
+      .teacher-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        justify-content: flex-start;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .card-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .001ms !important;
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>SEL 社會情緒學習互動教材中心</span>
+      </div>
+      <nav aria-label="頁面導覽">
+        <a class="nav-link" href="#modules">教材總覽</a>
+        <a class="nav-link" href="#teacher">教師專區</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-layout">
+      <div>
+        <p class="eyebrow">國小中高年級｜互動式 SEL 學習入口</p>
+        <h1>SEL 社會情緒學習互動教材中心</h1>
+        <p class="lead">以情緒覺察、情緒調節、同理心、人際溝通與負責任的決策為主軸，整理成可逐步擴充的互動教材地圖。</p>
+      </div>
+      <div class="quick-stats" aria-label="教材中心統計">
+        <div class="stat"><strong>5</strong><span>SEL 學習主軸</span></div>
+        <div class="stat"><strong>15</strong><span>學生互動教材入口</span></div>
+        <div class="stat"><strong>4</strong><span>教師支援資源</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="toolbar" aria-label="搜尋與篩選">
+    <div class="wrap toolbar-grid">
+      <label class="search">
+        <span class="sr-only">搜尋教材</span>
+        <input id="search" type="search" placeholder="搜尋教材名稱或能力，例如：呼吸、同理、決策">
+      </label>
+      <div class="filters" aria-label="教材狀態篩選">
+        <button class="filter-btn" type="button" data-status="all" aria-pressed="true">全部</button>
+        <button class="filter-btn" type="button" data-status="ready" aria-pressed="false">可使用</button>
+        <button class="filter-btn" type="button" data-status="planned" aria-pressed="false">待製作</button>
+      </div>
+    </div>
+  </section>
+
+  <main id="modules" class="wrap">
+    <div class="layout">
+      <aside class="side-panel" aria-label="SEL 主軸選單">
+        <h2>學習主軸</h2>
+        <ul class="path-list">
+          <li><button type="button" data-category="all" aria-pressed="true"><span class="path-index">全</span><span>全部教材</span></button></li>
+          <li><button type="button" data-category="01 情緒覺察" aria-pressed="false"><span class="path-index">01</span><span>情緒覺察</span></button></li>
+          <li><button type="button" data-category="02 情緒調節" aria-pressed="false"><span class="path-index">02</span><span>情緒調節</span></button></li>
+          <li><button type="button" data-category="03 同理心" aria-pressed="false"><span class="path-index">03</span><span>同理心</span></button></li>
+          <li><button type="button" data-category="04 人際溝通" aria-pressed="false"><span class="path-index">04</span><span>人際溝通</span></button></li>
+          <li><button type="button" data-category="05 負責任的決策" aria-pressed="false"><span class="path-index">05</span><span>負責任的決策</span></button></li>
+        </ul>
+      </aside>
+
+      <div class="content" id="module-content" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <section id="teacher" class="teacher-zone">
+    <div class="wrap">
+      <h2 class="section-title">教師專區</h2>
+      <div class="teacher-grid">
+        <article class="teacher-item">
+          <h3>教案</h3>
+          <p>可依班級事件、晨光時間、綜合活動或輔導課安排 15 到 40 分鐘課程流程。</p>
+        </article>
+        <article class="teacher-item">
+          <h3>學習單</h3>
+          <p>搭配學生反思、角色扮演紀錄與課後行動承諾，方便紙本或電子化使用。</p>
+        </article>
+        <article class="teacher-item">
+          <h3>Rubric</h3>
+          <p>觀察學生是否能覺察情緒、說出需要、提出選擇並尊重他人觀點。</p>
+        </article>
+        <article class="teacher-item">
+          <h3>參考文章</h3>
+          <p>整理 SEL 核心能力、班級經營對話句型與情緒調節策略的延伸閱讀。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <aside class="detail-panel" id="detail-panel" hidden aria-live="polite">
+    <h2 id="detail-title">教材資訊</h2>
+    <p id="detail-body"></p>
+    <button class="detail-close" type="button" id="detail-close">關閉</button>
+  </aside>
+
+  <script>
+    const modules = [
+      {
+        category: "01 情緒覺察",
+        color: "coral",
+        items: [
+          ["情緒溫度計", "用刻度辨認情緒強度，練習把感覺從小到大說清楚。", ["情緒命名", "強度判斷"], "planned"],
+          ["我的心情天氣", "用天氣圖像描述心情狀態，協助學生把抽象感受具體化。", ["自我覺察", "情緒表達"], "planned"],
+          ["身體感覺地圖", "點選身體部位，記錄緊繃、發熱、心跳等情緒訊號。", ["身體覺察", "情緒線索"], "planned"]
+        ]
+      },
+      {
+        category: "02 情緒調節",
+        color: "gold",
+        items: [
+          ["呼吸練習動畫", "跟著動畫節奏吸氣、停留、吐氣，練習讓身體慢慢降溫。", ["呼吸調節", "冷靜策略"], "planned"],
+          ["情緒紅綠燈", "在生氣情境中練習紅燈停、黃燈想、綠燈選。", ["停想選", "衝動控制"], "ready", "../sel-emotion-traffic-light/index.html"],
+          ["冷靜五步驟", "依序完成停下來、呼吸、說感受、找選擇、再行動。", ["步驟策略", "自我管理"], "planned"]
+        ]
+      },
+      {
+        category: "03 同理心",
+        color: "sky",
+        items: [
+          ["角色觀點切換", "切換不同角色視角，理解同一件事可能有不同感受。", ["觀點取替", "同理理解"], "planned"],
+          ["他可能怎麼想", "從表情、語句與情境線索推測他人的可能想法。", ["線索判讀", "情緒推論"], "planned"],
+          ["看見別人的需要", "練習從行為背後找到需要，例如被聽見、被尊重、被幫助。", ["需求辨識", "關懷行動"], "planned"]
+        ]
+      },
+      {
+        category: "04 人際溝通",
+        color: "leaf",
+        items: [
+          ["我訊息練習", "用「我覺得、因為、我希望」句型表達感受與需求。", ["我訊息", "清楚表達"], "planned"],
+          ["衝突解決選擇題", "比較不同回應方式的後果，選擇能降低衝突的做法。", ["衝突解決", "後果思考"], "planned"],
+          ["分組合作任務", "在任務分工中練習傾聽、輪流、協調與修正。", ["合作技巧", "任務溝通"], "planned"]
+        ]
+      },
+      {
+        category: "05 負責任的決策",
+        color: "violet",
+        items: [
+          ["選擇與後果", "把每個選擇連到可能結果，練習先想後果再行動。", ["後果預測", "責任選擇"], "planned"],
+          ["班級事件討論", "用班級常見事件進行判斷、討論與修正決策。", ["情境判斷", "班級規範"], "planned"],
+          ["科展困境模擬器", "面對分工不均、資料錯誤或時間不足時，練習做負責任的決定。", ["問題解決", "團隊決策"], "planned"]
+        ]
+      }
+    ];
+
+    const content = document.querySelector("#module-content");
+    const search = document.querySelector("#search");
+    const detailPanel = document.querySelector("#detail-panel");
+    const detailTitle = document.querySelector("#detail-title");
+    const detailBody = document.querySelector("#detail-body");
+    const detailClose = document.querySelector("#detail-close");
+    let activeCategory = "all";
+    let activeStatus = "all";
+
+    function makeCard(item, category) {
+      const [title, description, skills, status, href] = item;
+      const statusText = status === "ready" ? "可使用" : "待製作";
+      const openControl = status === "ready"
+        ? `<a class="action primary" href="${href}"><span class="action-icon open" aria-hidden="true"></span>開啟</a>`
+        : `<span class="action" aria-disabled="true"><span class="action-icon open" aria-hidden="true"></span>待製作</span>`;
+
+      return `
+        <article class="resource-card" data-status="${status}" data-title="${title}" data-category="${category}">
+          <div>
+            <h3 class="resource-title">${title}<span class="tag ${status === "planned" ? "plan" : ""}">${statusText}</span></h3>
+            <p>${description}</p>
+            <div class="skills">${skills.map((skill) => `<span>${skill}</span>`).join("")}</div>
+          </div>
+          <div class="card-actions">
+            ${openControl}
+            <button class="action detail-button" type="button" data-title="${title}" data-description="${description}" data-category="${category}" data-skills="${skills.join("、")}">
+              <span class="action-icon info" aria-hidden="true"></span>資訊
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function filteredModules() {
+      const keyword = search.value.trim().toLowerCase();
+      return modules.map((group) => {
+        const items = group.items.filter((item) => {
+          const [title, description, skills, status] = item;
+          const inCategory = activeCategory === "all" || group.category === activeCategory;
+          const inStatus = activeStatus === "all" || status === activeStatus;
+          const haystack = `${group.category} ${title} ${description} ${skills.join(" ")}`.toLowerCase();
+          const inKeyword = !keyword || haystack.includes(keyword);
+          return inCategory && inStatus && inKeyword;
+        });
+        return { ...group, items };
+      }).filter((group) => group.items.length);
+    }
+
+    function render() {
+      const groups = filteredModules();
+
+      if (!groups.length) {
+        content.innerHTML = `<div class="empty">找不到符合條件的教材。請換一個關鍵字或篩選條件。</div>`;
+        return;
+      }
+
+      content.innerHTML = groups.map((group) => `
+        <section class="module-section" id="${group.category.slice(0, 2)}">
+          <div class="section-heading">
+            <h2 class="section-title">${group.category}</h2>
+            <p>${group.items.length} 個教材入口</p>
+          </div>
+          <div class="cards">
+            ${group.items.map((item) => makeCard(item, group.category)).join("")}
+          </div>
+        </section>
+      `).join("");
+    }
+
+    document.querySelectorAll("[data-category]").forEach((button) => {
+      button.addEventListener("click", () => {
+        activeCategory = button.dataset.category;
+        document.querySelectorAll("[data-category]").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+        render();
+      });
+    });
+
+    document.querySelectorAll("[data-status]").forEach((button) => {
+      button.addEventListener("click", () => {
+        activeStatus = button.dataset.status;
+        document.querySelectorAll(".filter-btn").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+        render();
+      });
+    });
+
+    search.addEventListener("input", render);
+
+    content.addEventListener("click", (event) => {
+      const button = event.target.closest(".detail-button");
+      if (!button) {
+        return;
+      }
+
+      detailTitle.textContent = button.dataset.title;
+      detailBody.textContent = `${button.dataset.category}｜練習重點：${button.dataset.skills}。${button.dataset.description}`;
+      detailPanel.hidden = false;
+      detailClose.focus();
+    });
+
+    detailClose.addEventListener("click", () => {
+      detailPanel.hidden = true;
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        detailPanel.hidden = true;
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

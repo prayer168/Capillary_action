@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>我的情緒紅綠燈：生氣時先停、想、選</title>
+  <style>
+    :root {
+      --ink: #28323a;
+      --muted: #61707a;
+      --paper: #fffaf1;
+      --surface: #ffffff;
+      --line: #d9e3df;
+      --red: #dd5a52;
+      --red-soft: #ffe2df;
+      --yellow: #e5af39;
+      --yellow-soft: #fff0c8;
+      --green: #45a374;
+      --green-soft: #dff3e8;
+      --blue: #5a8ca7;
+      --focus: #2d6f8f;
+      --shadow: 0 16px 40px rgba(44, 62, 70, .12);
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 224, 178, .48), transparent 28rem),
+        linear-gradient(135deg, #f8efe1 0%, #edf6f1 52%, #eef5f8 100%);
+      line-height: 1.65;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 78vh;
+      display: grid;
+      align-items: center;
+      padding: 42px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(280px, .92fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: #4a6d76;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .signal-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 18px 0 0 var(--yellow), 36px 0 0 var(--red);
+      margin-right: 36px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.05rem, 5vw, 4.6rem);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 680px;
+      margin: 22px 0 0;
+      font-size: clamp(1.05rem, 2vw, 1.32rem);
+      color: #3f535d;
+    }
+
+    .goal-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .goal-list li {
+      min-height: 96px;
+      padding: 15px 16px;
+      background: rgba(255, 255, 255, .74);
+      border: 1px solid rgba(90, 140, 167, .22);
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .illustration {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 420px;
+    }
+
+    .traffic-light {
+      width: min(260px, 75vw);
+      padding: 28px 24px;
+      border-radius: 34px;
+      background: #37434a;
+      box-shadow: var(--shadow);
+      border: 8px solid rgba(255, 255, 255, .5);
+    }
+
+    .lamp {
+      position: relative;
+      width: 148px;
+      height: 148px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: #cad2d3;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, .95);
+      font-weight: 900;
+      font-size: 1.5rem;
+      box-shadow: inset 0 10px 18px rgba(0, 0, 0, .16);
+    }
+
+    .lamp:last-child {
+      margin-bottom: 0;
+    }
+
+    .lamp.red {
+      background: var(--red);
+    }
+
+    .lamp.yellow {
+      background: var(--yellow);
+      color: #3e3421;
+    }
+
+    .lamp.green {
+      background: var(--green);
+    }
+
+    .spark {
+      position: absolute;
+      width: 58px;
+      height: 58px;
+      border: 5px solid #fff4d7;
+      border-radius: 50%;
+      opacity: .86;
+    }
+
+    .spark.one {
+      top: 42px;
+      right: 20px;
+    }
+
+    .spark.two {
+      left: 28px;
+      bottom: 56px;
+      width: 38px;
+      height: 38px;
+      border-color: #d7eee5;
+    }
+
+    main {
+      padding-bottom: 56px;
+    }
+
+    section {
+      margin: 0 0 22px;
+    }
+
+    .band {
+      background: rgba(255, 255, 255, .78);
+      border-top: 1px solid rgba(255, 255, 255, .7);
+      border-bottom: 1px solid rgba(66, 101, 110, .12);
+      padding: 34px 0;
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      line-height: 1.24;
+      letter-spacing: 0;
+    }
+
+    .story {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .story-label {
+      padding: 22px;
+      border-radius: 8px;
+      background: #f3e9dc;
+      border: 1px solid #e1d0ba;
+    }
+
+    .story-label p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .story-text {
+      margin: 0;
+      padding: 24px;
+      border-left: 7px solid var(--yellow);
+      background: var(--surface);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(72, 83, 78, .08);
+      font-size: clamp(1.12rem, 2vw, 1.38rem);
+      font-weight: 700;
+    }
+
+    .traffic-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .step-card {
+      min-height: 100%;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 10px 26px rgba(51, 75, 82, .08);
+    }
+
+    .step-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-size: 1.36rem;
+      letter-spacing: 0;
+    }
+
+    .step-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .step-card.red .step-badge {
+      background: var(--red);
+    }
+
+    .step-card.yellow .step-badge {
+      background: var(--yellow);
+      color: #3d3016;
+    }
+
+    .step-card.green .step-badge {
+      background: var(--green);
+    }
+
+    .prompt {
+      margin: 0 0 14px;
+      color: #4e5f66;
+      font-weight: 700;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .choice {
+      width: 100%;
+      min-height: 54px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #f8fbfa;
+      color: var(--ink);
+      text-align: left;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .choice:hover {
+      transform: translateY(-1px);
+      border-color: #a8c2bd;
+      background: #ffffff;
+    }
+
+    .choice.selected {
+      border-color: var(--blue);
+      background: #eaf4f7;
+      box-shadow: inset 4px 0 0 var(--blue);
+      font-weight: 800;
+    }
+
+    .feedback {
+      min-height: 92px;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #f1f6f4;
+      border: 1px solid #c9dcd6;
+      color: #33474d;
+    }
+
+    .breathing-area {
+      display: grid;
+      grid-template-columns: minmax(190px, .45fr) minmax(0, .55fr);
+      gap: 24px;
+      align-items: center;
+      padding: 24px;
+      background: #f7fbf7;
+      border: 1px solid #d9e8df;
+      border-radius: 8px;
+    }
+
+    .breath-orb {
+      width: 170px;
+      height: 170px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255, 255, 255, .9) 0 28%, transparent 29%),
+        radial-gradient(circle at 35% 30%, #e0f7eb, #78bea0);
+      box-shadow: 0 0 0 20px rgba(120, 190, 160, .16), 0 18px 34px rgba(45, 99, 86, .18);
+      animation: breathe 5.6s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        transform: scale(.78);
+      }
+      45% {
+        transform: scale(1);
+      }
+      60% {
+        transform: scale(1);
+      }
+    }
+
+    .breath-copy h3 {
+      margin: 0 0 8px;
+      font-size: 1.45rem;
+    }
+
+    .breath-count {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .breath-count span {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #e6f2ec;
+      border: 1px solid #c7dfd3;
+      font-weight: 800;
+    }
+
+    .reflection-grid,
+    .teacher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .reflect-card,
+    .teacher-note {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(56, 76, 78, .07);
+    }
+
+    .reflect-card label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 116px;
+      resize: vertical;
+      padding: 12px;
+      border: 1px solid #c7d7d2;
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fbfefd;
+    }
+
+    .teacher-note h3 {
+      margin: 0 0 8px;
+      font-size: 1.12rem;
+    }
+
+    .teacher-note p {
+      margin: 0;
+      color: #506068;
+    }
+
+    .summary-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 8px;
+      background: #f3efe7;
+      border: 1px solid #e2d7c4;
+    }
+
+    .summary-bar p {
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .reset-btn {
+      min-height: 46px;
+      padding: 9px 16px;
+      border: 0;
+      border-radius: 8px;
+      background: #45646d;
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .reset-btn:hover {
+      background: #334e56;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .story,
+      .breathing-area {
+        grid-template-columns: 1fr;
+      }
+
+      .goal-list,
+      .traffic-steps,
+      .reflection-grid,
+      .teacher-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .illustration {
+        min-height: 320px;
+      }
+
+      .traffic-light {
+        width: min(220px, 72vw);
+      }
+
+      .lamp {
+        width: 118px;
+        height: 118px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wrap {
+        width: min(100% - 22px, 1120px);
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .band {
+        padding: 26px 0;
+      }
+
+      .step-card,
+      .story-text,
+      .story-label,
+      .breathing-area {
+        padding: 18px;
+      }
+
+      .summary-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .reset-btn {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow"><span class="signal-dot" aria-hidden="true"></span>SEL 社會情緒學習｜國小中高年級</p>
+        <h1>我的情緒紅綠燈：生氣時先停、想、選</h1>
+        <p class="subtitle">透過情境故事與紅燈、黃燈、綠燈三步驟，練習在生氣時先照顧自己，再做出比較合適的選擇。</p>
+        <ul class="goal-list" aria-label="教材目標">
+          <li>覺察生氣時的身體反應</li>
+          <li>說出生氣時可能出現的想法</li>
+          <li>練習用三步驟選擇行動</li>
+        </ul>
+      </div>
+      <div class="illustration" aria-label="紅黃綠情緒紅綠燈圖像">
+        <span class="spark one" aria-hidden="true"></span>
+        <span class="spark two" aria-hidden="true"></span>
+        <div class="traffic-light" aria-hidden="true">
+          <div class="lamp red">停</div>
+          <div class="lamp yellow">想</div>
+          <div class="lamp green">選</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="band" aria-labelledby="story-title">
+      <div class="wrap story">
+        <div class="story-label">
+          <h2 id="story-title" class="section-title">情境故事</h2>
+          <p>先讀故事，再想一想：如果你是故事中的主角，身體、想法和行動可能會發生什麼變化？</p>
+        </div>
+        <p class="story-text">分組做實驗時，同學一直不聽你的想法，還把材料弄亂，你開始覺得很生氣。</p>
+      </div>
+    </section>
+
+    <section class="wrap" aria-labelledby="traffic-title">
+      <h2 id="traffic-title" class="section-title">情緒紅綠燈互動區</h2>
+      <div class="traffic-steps">
+        <article class="step-card red">
+          <h3><span class="step-badge">紅</span>紅燈：停下來，深呼吸</h3>
+          <p class="prompt">我生氣時，身體可能正在告訴我什麼？</p>
+          <div class="choices" data-group="body">
+            <button class="choice" data-feedback="你注意到身體變緊了。這是生氣常見的訊號，先停下來能避免立刻爆發。">拳頭握緊，肩膀用力</button>
+            <button class="choice" data-feedback="心跳變快代表情緒正在升高。先慢慢吸氣、吐氣，讓身體有時間降溫。">心跳變快，臉變熱</button>
+            <button class="choice" data-feedback="想大聲說話時，可以先停三秒。聲音放慢，別人比較聽得見你的需要。">很想大聲罵回去</button>
+          </div>
+          <div class="feedback" id="body-feedback" aria-live="polite">點選一個身體反應，看看它提醒你什麼。</div>
+        </article>
+
+        <article class="step-card yellow">
+          <h3><span class="step-badge">黃</span>黃燈：想一想，我現在怎麼了？</h3>
+          <p class="prompt">這時候，我腦中可能出現哪些想法？</p>
+          <div class="choices" data-group="thought">
+            <button class="choice" data-feedback="這個想法表示你很想被尊重。你可以把需要說清楚，而不是先假設對方故意。">他們都不尊重我</button>
+            <button class="choice" data-feedback="你注意到不公平的感覺。可以先確認任務分工，再請同學一起修正。">為什麼都要照他的做？</button>
+            <button class="choice" data-feedback="這個想法很強烈，可能讓衝突變大。先問自己：我想讓事情更好，還是只想發洩？">我不要跟他一組了</button>
+          </div>
+          <div class="feedback" id="thought-feedback" aria-live="polite">點選一個可能的想法，練習把情緒和想法分開看。</div>
+        </article>
+
+        <article class="step-card green">
+          <h3><span class="step-badge">綠</span>綠燈：選一個比較好的做法</h3>
+          <p class="prompt">接下來，我可以怎麼做比較能解決問題？</p>
+          <div class="choices" data-group="action">
+            <button class="choice" data-feedback="這是清楚表達的做法。你說出感受與需要，也保留合作的可能。">說：「我有點生氣，想先把材料整理好，再輪流講想法。」</button>
+            <button class="choice" data-feedback="這能讓自己先冷靜。短暫離開前，可以說明你會回來繼續合作。">先做兩次深呼吸，請老師讓我到旁邊冷靜一下</button>
+            <button class="choice" data-feedback="這會讓情緒暫時爆出來，但問題可能變更大。可以改成描述事情，不攻擊人。">直接把材料搶回來，叫同學不要再碰</button>
+          </div>
+          <div class="feedback" id="action-feedback" aria-live="polite">點選一個做法，看看它可能帶來的結果。</div>
+        </article>
+      </div>
+
+      <div class="summary-bar" aria-live="polite">
+        <p id="summary-text">完成三個步驟後，這裡會整理你的紅綠燈練習。</p>
+        <button class="reset-btn" type="button" id="reset">重新練習</button>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="breath-title">
+      <div class="wrap breathing-area">
+        <div class="breath-orb" aria-hidden="true"></div>
+        <div class="breath-copy">
+          <h2 id="breath-title" class="section-title">CSS 呼吸動畫</h2>
+          <h3>跟著圓圈慢慢呼吸</h3>
+          <p>圓圈變大時吸氣，停一下；圓圈變小時吐氣。可以做三輪，再回到黃燈想一想。</p>
+          <div class="breath-count" aria-label="呼吸步驟">
+            <span>吸氣 1、2、3</span>
+            <span>停一下</span>
+            <span>吐氣 1、2、3</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" aria-labelledby="reflect-title">
+      <h2 id="reflect-title" class="section-title">三題反思問題</h2>
+      <div class="reflection-grid">
+        <div class="reflect-card">
+          <label for="q1">1. 我生氣時，身體最明顯的訊號是什麼？</label>
+          <textarea id="q1" placeholder="例如：臉變熱、心跳變快、手很用力。"></textarea>
+        </div>
+        <div class="reflect-card">
+          <label for="q2">2. 那一刻，我心裡最常出現的想法是什麼？</label>
+          <textarea id="q2" placeholder="例如：他是不是故意的？為什麼沒有人聽我說？"></textarea>
+        </div>
+        <div class="reflect-card">
+          <label for="q3">3. 下次生氣時，我想選擇哪一個比較好的做法？</label>
+          <textarea id="q3" placeholder="例如：先深呼吸，再用一句話說出我的需要。"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="teacher-title">
+      <div class="wrap">
+        <h2 id="teacher-title" class="section-title">教師提醒區</h2>
+        <div class="teacher-grid">
+          <article class="teacher-note">
+            <h3>先正常化情緒</h3>
+            <p>提醒學生：生氣不是壞事，它是在告訴我們某個需要沒有被看見。重點是選擇不傷害自己或別人的表達方式。</p>
+          </article>
+          <article class="teacher-note">
+            <h3>把行為和人分開</h3>
+            <p>引導學生描述「發生了什麼事」與「我需要什麼」，避免使用貼標籤或責怪語句。</p>
+          </article>
+          <article class="teacher-note">
+            <h3>延伸活動</h3>
+            <p>可請學生兩人一組角色扮演，練習用「我覺得……我希望……」完成綠燈行動。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const selections = {
+      body: "",
+      thought: "",
+      action: ""
+    };
+
+    const labels = {
+      body: "紅燈覺察",
+      thought: "黃燈想法",
+      action: "綠燈選擇"
+    };
+
+    const summaryText = document.querySelector("#summary-text");
+    const resetButton = document.querySelector("#reset");
+
+    function updateSummary() {
+      const chosen = Object.entries(selections).filter(([, value]) => value);
+
+      if (chosen.length < 3) {
+        summaryText.textContent = `已完成 ${chosen.length} / 3 步。請繼續點選紅燈、黃燈、綠燈的選項。`;
+        return;
+      }
+
+      summaryText.textContent = `我的練習：${labels.body}是「${selections.body}」；${labels.thought}是「${selections.thought}」；${labels.action}是「${selections.action}」。`;
+    }
+
+    document.querySelectorAll(".choices").forEach((group) => {
+      const groupName = group.dataset.group;
+      const feedback = document.querySelector(`#${groupName}-feedback`);
+
+      group.addEventListener("click", (event) => {
+        const button = event.target.closest(".choice");
+
+        if (!button) {
+          return;
+        }
+
+        group.querySelectorAll(".choice").forEach((choice) => {
+          choice.classList.remove("selected");
+          choice.removeAttribute("aria-pressed");
+        });
+
+        button.classList.add("selected");
+        button.setAttribute("aria-pressed", "true");
+        selections[groupName] = button.textContent.trim();
+        feedback.textContent = button.dataset.feedback;
+        updateSummary();
+      });
+    });
+
+    resetButton.addEventListener("click", () => {
+      Object.keys(selections).forEach((key) => {
+        selections[key] = "";
+      });
+
+      document.querySelectorAll(".choice").forEach((choice) => {
+        choice.classList.remove("selected");
+        choice.removeAttribute("aria-pressed");
+      });
+
+      document.querySelector("#body-feedback").textContent = "點選一個身體反應，看看它提醒你什麼。";
+      document.querySelector("#thought-feedback").textContent = "點選一個可能的想法，練習把情緒和想法分開看。";
+      document.querySelector("#action-feedback").textContent = "點選一個做法，看看它可能帶來的結果。";
+      summaryText.textContent = "完成三個步驟後，這裡會整理你的紅綠燈練習。";
+    });
+  </script>
+</body>
+</html>
