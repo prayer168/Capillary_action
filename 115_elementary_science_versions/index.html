@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>115 學年度｜國小自然三版本課程架構</title>
+  <meta name="description" content="整理康軒、翰林、南一 115 學年度國小自然科課程架構，依中年級、高年級與上下學期並列比較。" />
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #64748b;
+      --line: #d8e1ee;
+      --blue: #2563eb;
+      --blue-soft: #dbeafe;
+      --teal: #0f766e;
+      --amber: #b45309;
+      --rose: #be123c;
+      --shadow: 0 14px 32px rgba(15, 23, 42, .08);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, .12), transparent 32rem),
+        linear-gradient(180deg, #eef6ff 0%, var(--bg) 42%, #fff 100%);
+      line-height: 1.65;
+    }
+
+    header {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 38px 0 18px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: #1d4ed8;
+      font-weight: 800;
+      font-size: .95rem;
+    }
+
+    h1 {
+      margin: 18px 0 8px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 860px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+    }
+
+    .wrap {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto 52px;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+      margin: 22px 0;
+      padding: 12px;
+      background: rgba(244, 247, 251, .9);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .search {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 11px 14px;
+      font: inherit;
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    }
+
+    .chips {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: #334155;
+      padding: 8px 13px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .chip.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat {
+      min-height: 92px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .86);
+      padding: 15px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, .05);
+    }
+
+    .stat b { display: block; font-size: 1.45rem; line-height: 1; }
+    .stat span { display: block; margin-top: 8px; color: var(--muted); font-weight: 700; }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0 14px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+    }
+
+    .badge {
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: #047857;
+      padding: 5px 10px;
+      font-size: .9rem;
+      font-weight: 900;
+    }
+
+    .grade {
+      margin: 0 0 26px;
+    }
+
+    .grade-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 18px 0 10px;
+    }
+
+    .grade h3 {
+      margin: 0;
+      font-size: 1.42rem;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: .95rem;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .publisher {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .publisher h4 {
+      margin: 0;
+      padding: 13px 16px;
+      background: var(--teal);
+      color: #fff;
+      font-size: 1.13rem;
+      letter-spacing: 0;
+    }
+
+    .publisher[data-publisher="翰林"] h4 { background: var(--blue); }
+    .publisher[data-publisher="南一"] h4 { background: var(--amber); }
+
+    .unit {
+      padding: 14px 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .unit:first-of-type { border-top: 0; }
+
+    .unit-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 7px;
+      font-size: 1.04rem;
+      font-weight: 900;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      margin-top: .55rem;
+      border-radius: 50%;
+      background: var(--teal);
+      flex: 0 0 auto;
+    }
+
+    .publisher[data-publisher="翰林"] .dot { background: var(--blue); }
+    .publisher[data-publisher="南一"] .dot { background: var(--amber); }
+
+    ul { list-style: none; margin: 0; padding: 0; }
+    li { padding: 2px 0; color: #334155; }
+    mark { border-radius: 4px; background: #fef08a; padding: 0 2px; }
+
+    .no-result {
+      display: none;
+      margin-top: 18px;
+      border: 1px solid #fed7aa;
+      border-radius: var(--radius);
+      background: #fff7ed;
+      padding: 18px;
+      color: #9a3412;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .sources {
+      margin-top: 36px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .sources h2 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 1.1rem;
+    }
+
+    .sources a { color: #1d4ed8; font-weight: 800; }
+
+    @media (max-width: 980px) {
+      .toolbar { grid-template-columns: 1fr; }
+      .chips { justify-content: flex-start; }
+      .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid { grid-template-columns: 1fr; }
+      .publisher h4 { position: sticky; top: 86px; z-index: 2; }
+      .grade-head { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 560px) {
+      header, .wrap { width: min(100% - 20px, 1160px); }
+      header { padding-top: 28px; }
+      .summary { grid-template-columns: 1fr; }
+      .chip { flex: 1 1 auto; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none; }
+      .publisher { box-shadow: none; break-inside: avoid; }
+      .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      header, .wrap { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">115 學年度｜國小自然科</div>
+    <h1>康軒、翰林、南一課程架構並列</h1>
+    <p class="lead">依三年級到六年級、上學期到下學期整理三家書商自然科單元與活動。可用來做課程銜接、跨版本主題比對、備課進度規劃與公開展示。</p>
+  </header>
+
+  <main class="wrap">
+    <div class="toolbar" aria-label="篩選工具列">
+      <input id="search" class="search" type="search" placeholder="搜尋年級、單元、活動或關鍵字，例如：電磁、昆蟲、水溶液、天氣、星空" />
+      <div class="chips" role="group" aria-label="年級篩選">
+        <button class="chip active" data-level="all">全部</button>
+        <button class="chip" data-level="中年級">中年級</button>
+        <button class="chip" data-level="高年級">高年級</button>
+      </div>
+      <div class="chips" role="group" aria-label="書商篩選">
+        <button class="chip active" data-publisher="all">三版本</button>
+        <button class="chip" data-publisher="康軒">康軒</button>
+        <button class="chip" data-publisher="翰林">翰林</button>
+        <button class="chip" data-publisher="南一">南一</button>
+      </div>
+    </div>
+
+    <section class="summary" aria-label="資料摘要">
+      <div class="stat"><b>3</b><span>書商版本</span></div>
+      <div class="stat"><b>4</b><span>年級段：三至六年級</span></div>
+      <div class="stat"><b>8</b><span>上下學期架構</span></div>
+      <div class="stat"><b>90+</b><span>單元與活動條目</span></div>
+    </section>
+
+    <div id="content"></div>
+    <div id="noResult" class="no-result">找不到符合的課程內容，請換一個關鍵字或篩選條件試試。</div>
+
+    <section class="sources">
+      <h2>資料來源與整理說明</h2>
+      <p>本頁依 2026-06-22 可公開查閱之三家官方教材博覽會與簡介本整理：<a href="https://945cloud.knsh.com.tw/show/E/expo/inner-page.html?expo=textbook&subject=science" target="_blank" rel="noopener">康軒國小教材博覽會自然</a>、<a href="https://el.hle.com.tw/class/natural/index.html" target="_blank" rel="noopener">翰林 115 國小教材博覽會自然</a>、<a href="https://naniexpo.nani.com.tw/template/subject.php?grade=science" target="_blank" rel="noopener">南一教材博覽會自然</a>。表格文字以各簡介本「課程架構／單元架構」頁為主，僅做版面重排與檢索化。</p>
+    </section>
+  </main>
+
+  <script id="course-data" type="application/json">
+{
+  "中年級": {
+    "三上": {
+      "康軒": [
+        {"u":"單元一 多采多姿的植物","l":["活動1 植物是什麼","活動2 植物如何獲取陽光和水","活動3 花、果實和種子有什麼功能"]},
+        {"u":"單元二 生活中的力","l":["活動1 力的現象有哪些","活動2 磁力有什麼特性","活動3 還有什麼不一樣的力"]},
+        {"u":"單元三 奇妙的空氣","l":["活動1 空氣在哪裡","活動2 空氣還有什麼特性","活動3 乾淨空氣重要嗎"]},
+        {"u":"單元四 廚房裡的科學","l":["活動1 如何辨認廚房中的材料","活動2 如何增加物質溶解的量","活動3 怎麼辨認水溶液的酸鹼"]}
+      ],
+      "翰林": [
+        {"u":"一、植物大發現","l":["1-1 認識植物","1-2 植物的葉、莖、根","1-3 植物的花、果實、種子"]},
+        {"u":"二、磁鐵好好玩","l":["2-1 磁鐵的磁力","2-2 磁鐵的祕密","2-3 磁鐵在生活中的應用"]},
+        {"u":"三、空氣與風","l":["3-1 風力與風向","3-2 奇妙的空氣","3-3 空氣、風與生活"]},
+        {"u":"四、溶解的奇妙","l":["4-1 分辨物質的方法","4-2 物質在水中溶解了","4-3 溶解的應用"]}
+      ],
+      "南一": [
+        {"u":"1 認識植物","l":["植物與環境","植物的身體","植物與生活"]},
+        {"u":"2 空氣和水","l":["空氣和水的特性","空氣和水的壓縮與傳動","流動的空氣"]},
+        {"u":"3 認識動物","l":["動物的身體","動物的運動","動物與生活"]},
+        {"u":"4 磁鐵","l":["磁力的探討","磁鐵的特性","磁鐵與生活"]}
+      ]
+    },
+    "三下": {
+      "康軒": [
+        {"u":"單元一 田園樂","l":["活動1 蔬菜是從哪裡來的","活動2 哪些因素會影響蔬菜生長","活動3 蔬菜生長會經歷哪些變化"]},
+        {"u":"單元二 溫度變化對物質的影響","l":["活動1 什麼因素會影響物質變化","活動2 溫度改變對水有哪些變化","活動3 溫度改變對其他物質有什麼影響"]},
+        {"u":"單元三 我是動物解說員","l":["活動1 動物身體構造和功能有關嗎","活動2 動物身體構造和適應環境有關嗎","活動3 動物有什麼生存法寶"]},
+        {"u":"單元四 天氣變變變","l":["活動1 天氣對生活有何影響","活動2 如何觀測天氣","活動3 如何應用氣象資訊"]}
+      ],
+      "翰林": [
+        {"u":"一、快樂小農夫","l":["1-1 菜園大發現","1-2 種植前的準備","1-3 小農夫日記"]},
+        {"u":"二、千變萬化的水","l":["2-1 水和冰","2-2 水和水蒸氣","2-3 水的三態變化和應用"]},
+        {"u":"三、動物王國","l":["3-1 動物的身體構造與功能","3-2 動物的生存","3-3 世界上「最多的」動物-昆蟲"]},
+        {"u":"四、天氣看聽停","l":["4-1 觀測天氣","4-2 氣象預報","4-3 季節與生活"]}
+      ],
+      "南一": [
+        {"u":"1 種菜好好玩","l":["菜園裡的菜","照顧蔬菜","蔬菜長大了"]},
+        {"u":"2 溫度與物質變化的關係","l":["物質變化的現象","溫度改變對水的影響","溫度改變對物質的影響"]},
+        {"u":"3 天氣特派員","l":["認識天氣狀態","觀測天氣","天氣與生活"]},
+        {"u":"4 廚房中的科學","l":["認識廚房裡的材料","物質能溶解的量","菜汁變色了"]}
+      ]
+    },
+    "四上": {
+      "康軒": [
+        {"u":"單元一 地表的靜與動","l":["活動1 地表物質有什麼","活動2 地表環境會變動嗎","活動3 怎樣做好地震防災"]},
+        {"u":"單元二 水生生物與環境","l":["活動1 生物生存的環境都相同嗎","活動2 水生生物如何適應環境","活動3 如何愛護環境"]},
+        {"u":"單元三 有趣的聲光現象","l":["活動1 聲音如何產生和傳播","活動2 光有什麼特性","活動3 如何應用聲與光"]},
+        {"u":"單元四 好玩的電路","l":["活動1 如何讓燈泡發亮","活動2 電路有哪些連接方式","活動3 用電觀念知多少"]}
+      ],
+      "翰林": [
+        {"u":"一、閃亮的天空","l":["1-1 一天的天空","1-2 月亮的位置","1-3 月相的變化"]},
+        {"u":"二、水域環境","l":["2-1 認識水域環境","2-2 水生植物","2-3 水生動物","2-4 珍惜水域環境"]},
+        {"u":"三、物質變變變","l":["3-1 影響物質變化的因素","3-2 溫度對物質的影響","3-3 酸與鹼對物質的影響"]},
+        {"u":"四、聲光世界真有趣","l":["4-1 聲音的產生與傳播","4-2 光的直進與反射","4-3 聲音和光的應用"]}
+      ],
+      "南一": [
+        {"u":"1 地球的夥伴-日月星辰","l":["太陽、月亮與星星","多變的月亮","月相變化與生活"]},
+        {"u":"2 水中世界","l":["水中生物的生長環境","水生生物的外形與構造","愛護水域環境"]},
+        {"u":"3 光和能源","l":["光的行進方向","能量和能源轉換","節能減碳"]},
+        {"u":"4 電路好好玩","l":["讓燈泡亮的方式","電路的串聯和並聯","生活中的電"]}
+      ]
+    },
+    "四下": {
+      "康軒": [
+        {"u":"單元一 白天和夜晚的天空","l":["活動1 日夜景象有什麼不同","活動2 一天中太陽的位置會改變嗎","活動3 月亮每天都在變嗎"]},
+        {"u":"單元二 水的移動","l":["活動1 毛細現象有什麼特性","活動2 虹吸現象有什麼特性","活動3 連通管原理有什麼特性"]},
+        {"u":"單元三 昆蟲大解密","l":["活動1 昆蟲在哪裡","活動2 昆蟲如何適應環境與成長","活動3 昆蟲重要嗎"]},
+        {"u":"單元四 自然資源與利用","l":["活動1 能量重要嗎","活動2 如何運用自然資源","活動3 開發自然資源會有什麼影響"]}
+      ],
+      "翰林": [
+        {"u":"一、生活中的力","l":["1-1 力的作用","1-2 力的比較與表示","1-3 動力傳送"]},
+        {"u":"二、水的奇妙現象","l":["2-1 毛細現象","2-2 連通管","2-3 虹吸現象"]},
+        {"u":"三、變動的大地","l":["3-1 我們的大地","3-2 地表的變化","3-3 大地的災害"]},
+        {"u":"四、能源與電路","l":["4-1 生活中的能源","4-2 燈泡亮了","4-3 串聯和並聯","4-4 節約能源"]}
+      ],
+      "南一": [
+        {"u":"1 生活中有趣的力","l":["生活中各種的力","力的表示方法","浮力"]},
+        {"u":"2 昆蟲家族","l":["認識昆蟲","昆蟲的一生","昆蟲與生活"]},
+        {"u":"3 水的移動","l":["水怎麼移動","認識連通管原理的特性","認識虹吸現象的特性"]},
+        {"u":"4 了解臺灣的環境","l":["認識地表環境","變動的地表環境","地震與防災"]}
+      ]
+    }
+  },
+  "高年級": {
+    "五上": {
+      "康軒": [
+        {"u":"單元一 動物世界","l":["活動1 動物如何求生存","活動2 動物具有社會行為嗎","活動3 動物如何延續生命"]},
+        {"u":"單元二 探索聲光世界","l":["活動1 樂音與噪音有什麼不同","活動2 樂器如何發出不同的聲音","活動3 光有什麼特性與現象"]},
+        {"u":"單元三 神祕的天空","l":["活動1 太陽的位置和四季有關嗎","活動2 太陽系有哪些成員","活動3 四季的星空有什麼不一樣"]},
+        {"u":"單元四 燃燒與生鏽","l":["活動1 空氣與燃燒有什麼關係","活動2 燃燒的條件與如何滅火","活動3 為何會生鏽與如何防鏽"]}
+      ],
+      "翰林": [
+        {"u":"一、太陽的祕密","l":["1-1 太陽與生活","1-2 太陽的位置變化","1-3 光的折射"]},
+        {"u":"二、千變萬化的植物","l":["2-1 不同環境的植物","2-2 植物存活的本事","2-3 植物繁衍大顯身手","2-4 植物的特徵與分類"]},
+        {"u":"三、神奇的水溶液","l":["3-1 水溶液中的物質","3-2 水溶液的酸鹼性","3-3 水溶液的導電性"]},
+        {"u":"四、力與運動","l":["4-1 地球引力","4-2 力的測量","4-3 摩擦力"]}
+      ],
+      "南一": [
+        {"u":"1 太陽與光","l":["太陽在天空中的位置變化","認識光的現象與特性"]},
+        {"u":"2 植物世界","l":["植物根莖葉的功能","植物的繁殖","植物與人類生活"]},
+        {"u":"3 水溶液","l":["溶解現象","水溶液的酸鹼性","水溶液的導電性"]},
+        {"u":"4 力與運動","l":["力的測量","摩擦力","運動狀態的快慢"]}
+      ]
+    },
+    "五下": {
+      "康軒": [
+        {"u":"單元一 力與運動","l":["活動1 力有哪些種類","活動2 力對物體運動狀態有何影響","活動3 如何知道物體運動的快慢"]},
+        {"u":"單元二 大地的奧祕","l":["活動1 地層裡有什麼","活動2 大地如何變動","活動3 大地變動有什麼影響"]},
+        {"u":"單元三 植物世界面面觀","l":["活動1 植物如何製造養分","活動2 植物有哪些繁殖方式","活動3 植物有哪些妙招"]},
+        {"u":"單元四 熱的作用與傳播","l":["活動1 溫度改變對物質的體積有何影響","活動2 熱是如何傳播","活動3 如何保溫與散熱"]}
+      ],
+      "翰林": [
+        {"u":"一、探索星空的奧祕","l":["1-1 星空大解密","1-2 一起觀星星","1-3 夜裡辨認方位"]},
+        {"u":"二、空氣與燃燒","l":["2-1 氧氣與燃燒","2-2 二氧化碳","2-3 燃燒與滅火"]},
+        {"u":"三、防止生鏽與保存食物","l":["3-1 生鏽知多少","3-2 生活中的食物保存"]},
+        {"u":"四、揭祕動物的世界","l":["4-1 動物觀察員","4-2 動物的生存之道","4-3 動物的生命延續"]}
+      ],
+      "南一": [
+        {"u":"1 星星的世界","l":["認識星空","觀測星空","星星的移動"]},
+        {"u":"2 認識燃燒與生鏽","l":["空氣與燃燒的關係","氧氣和二氧化碳的特性","空氣與生鏽的關係"]},
+        {"u":"3 動物的生活","l":["動物的身體構造和運動","動物求生存的方式","動物延續生命的方式"]},
+        {"u":"4 聲音與樂器","l":["認識聲音三要素","噪音與防治"]}
+      ]
+    },
+    "六上": {
+      "康軒": [
+        {"u":"單元一 探索天氣的變化","l":["活動1 什麼是天氣變化的主角","活動2 如何預測天氣變化","活動3 氣候正在改變嗎"]},
+        {"u":"單元二 水溶液","l":["活動1 物質溶解後消失了嗎","活動2 水溶液可以導電嗎","活動3 水溶液的酸鹼性可以改變嗎"]},
+        {"u":"單元三 動物大解密","l":["活動1 動物如何運動","活動2 動物如何呼吸","活動3 動物與我們生活有關嗎"]},
+        {"u":"單元四 電磁作用","l":["活動1 指北針為何能辨認方位","活動2 電磁鐵是什麼","活動3 電磁作用對生活有什麼影響"]}
+      ],
+      "翰林": [
+        {"u":"一、熱的影響與傳播","l":["1-1 物質的變化與組成","1-2 熱的傳播","1-3 保溫與散熱"]},
+        {"u":"二、多變的天氣","l":["2-1 水與天氣的關係","2-2 天氣圖與天氣變化","2-3 颱風與防災"]},
+        {"u":"三、發現大地的奧祕","l":["3-1 大地的變動與影響","3-2 岩石、礦物與土壤","3-3 防災與地景保育"]},
+        {"u":"四、電磁與生活","l":["4-1 地球像個大磁鐵","4-2 認識電磁鐵","4-3 生活中電磁鐵的應用"]}
+      ],
+      "南一": [
+        {"u":"1 多樣的天氣變化","l":["大氣中的水","天氣圖與天氣變化","認識颱風"]},
+        {"u":"2 熱對物質的影響","l":["物質受熱後的變化","熱的傳播方式","保溫與散熱"]},
+        {"u":"3 變動的大地","l":["流水的作用","水岸地貌","地表組成"]},
+        {"u":"4 奇妙的電磁世界","l":["指北針與地磁","神奇的電磁鐵","電磁作用與生活的關係"]}
+      ]
+    },
+    "六下": {
+      "康軒": [
+        {"u":"單元一 簡單機械","l":["活動1 如何應用槓桿原理","活動2 輪軸與滑輪如何便利生活","活動3 還有哪些傳送動力的機械"]},
+        {"u":"單元二 能量與生活","l":["活動1 能量如何互相轉換","活動2 生活中如何利用能源"]},
+        {"u":"單元三 地球的生態","l":["活動1 生物彼此間有什麼關係","活動2 不同生態系中的生物有什麼不同","活動3 如何維護生物多樣性"]}
+      ],
+      "翰林": [
+        {"u":"一、簡單機械","l":["1-1 槓桿","1-2 輪軸","1-3 滑輪","1-4 齒輪與鏈條"]},
+        {"u":"二、生活中的聲音","l":["2-1 有聲的世界","2-2 聲音的性質","2-3 製作簡易樂器"]},
+        {"u":"三、寰宇永續護地球","l":["3-1 生物與環境","3-2 人類活動對生態的影響","3-3 資源開發與永續經營"]}
+      ],
+      "南一": [
+        {"u":"1 巧妙的施力工具","l":["認識槓桿","滑輪與輪軸","傳送動力"]},
+        {"u":"2 地球的環境與生態","l":["族群與群落","生物間的交互作用","地球的生態系"]},
+        {"u":"3 我們只有一個地球","l":["臺灣的生態","人類活動對環境的影響","打造永續家園"]}
+      ]
+    }
+  }
+}
+  </script>
+
+  <script>
+    const data = JSON.parse(document.getElementById("course-data").textContent);
+    const content = document.getElementById("content");
+    const searchInput = document.getElementById("search");
+    const noResult = document.getElementById("noResult");
+    let currentLevel = "all";
+    let currentPublisher = "all";
+
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function highlight(text, query) {
+      if (!query) return text;
+      return text.replace(new RegExp(escapeRegExp(query), "gi"), match => `<mark>${match}</mark>`);
+    }
+
+    function unitText(units) {
+      return units.map(unit => [unit.u, ...unit.l].join(" ")).join(" ");
+    }
+
+    function render() {
+      const query = searchInput.value.trim();
+      const queryLower = query.toLowerCase();
+      content.innerHTML = "";
+      let visibleCount = 0;
+
+      Object.entries(data).forEach(([level, grades]) => {
+        if (currentLevel !== "all" && currentLevel !== level) return;
+
+        const levelEl = document.createElement("section");
+        levelEl.className = "level";
+        levelEl.innerHTML = `<div class="section-title"><h2>${level}</h2><span class="badge">${Object.keys(grades).join("、")}</span></div>`;
+        let levelVisible = false;
+
+        Object.entries(grades).forEach(([grade, publishers]) => {
+          const publisherEntries = Object.entries(publishers).filter(([publisher]) => currentPublisher === "all" || currentPublisher === publisher);
+          const gradeText = [level, grade, ...publisherEntries.map(([publisher, units]) => `${publisher} ${unitText(units)}`)].join(" ");
+          if (query && !gradeText.toLowerCase().includes(queryLower)) return;
+
+          levelVisible = true;
+          visibleCount += 1;
+
+          const gradeEl = document.createElement("article");
+          gradeEl.className = "grade";
+          gradeEl.innerHTML = `<div class="grade-head"><h3>${grade}</h3><div class="hint">${currentPublisher === "all" ? "三版本並列比較" : `${currentPublisher}版本`}</div></div>`;
+
+          const grid = document.createElement("div");
+          grid.className = "grid";
+          publisherEntries.forEach(([publisher, units]) => {
+            const pubEl = document.createElement("section");
+            pubEl.className = "publisher";
+            pubEl.dataset.publisher = publisher;
+            pubEl.innerHTML = `<h4>${publisher}</h4>` + units.map(unit => `
+              <div class="unit">
+                <div class="unit-title"><span class="dot"></span>${highlight(unit.u, query)}</div>
+                <ul>${unit.l.map(item => `<li>${highlight(item, query)}</li>`).join("")}</ul>
+              </div>
+            `).join("");
+            grid.appendChild(pubEl);
+          });
+
+          gradeEl.appendChild(grid);
+          levelEl.appendChild(gradeEl);
+        });
+
+        if (levelVisible) content.appendChild(levelEl);
+      });
+
+      noResult.style.display = visibleCount ? "none" : "block";
+    }
+
+    document.querySelectorAll("[data-level]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-level]").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        currentLevel = button.dataset.level;
+        render();
+      });
+    });
+
+    document.querySelectorAll("[data-publisher]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-publisher]").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        currentPublisher = button.dataset.publisher;
+        render();
+      });
+    });
+
+    searchInput.addEventListener("input", render);
+    render();
+  </script>
+</body>
+</html>
