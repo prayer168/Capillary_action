@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>情緒溫度計｜SEL 社會情緒學習互動教材</title>
+  <style>
+    :root{--ink:#253238;--muted:#60717a;--line:#d7e2dd;--teal:#3f8f86;--teal-dark:#255f5a;--coral:#d8665b;--gold:#d7a842;--leaf:#6aa76f;--sky:#5f91aa;--violet:#8a7ab6;--paper:#fffaf1;--surface:#fff;font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:linear-gradient(135deg,#fff8ec,#edf7f3 54%,#edf4f8);line-height:1.65}button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #2f7598;outline-offset:3px}.wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}.top{padding:20px 0}.back{display:inline-flex;align-items:center;min-height:42px;padding:8px 12px;border-radius:8px;background:#fff;border:1px solid var(--line);text-decoration:none;font-weight:900}.hero{padding:28px 0 24px}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:center}.eyebrow{margin:0 0 10px;color:var(--teal-dark);font-weight:900}h1{margin:0;font-size:clamp(2rem,5vw,4rem);line-height:1.12;letter-spacing:0}.lead{margin:18px 0 0;max-width:720px;color:#4c5f66;font-size:clamp(1.05rem,2vw,1.26rem)}.signal{min-height:260px;display:grid;place-items:center;border-radius:8px;background:#fff;border:1px solid var(--line);box-shadow:0 14px 34px rgba(48,67,70,.1)}.shape{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 38% 30%,#fff 0 24%,transparent 25%),linear-gradient(135deg,var(--gold),var(--teal));box-shadow:0 0 0 22px rgba(63,143,134,.15)}.section{padding:24px 0}.band{background:rgba(255,255,255,.72);border-top:1px solid rgba(255,255,255,.8);border-bottom:1px solid rgba(54,89,89,.12)}.story{display:grid;grid-template-columns:.8fr 1.2fr;gap:18px}.panel,.card{padding:20px;border-radius:8px;background:#fff;border:1px solid var(--line);box-shadow:0 10px 24px rgba(50,75,76,.08)}h2{margin:0 0 12px;font-size:clamp(1.45rem,3vw,2.1rem);letter-spacing:0}.goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 0;padding:0;list-style:none}.goals li{padding:14px;border-radius:8px;background:#f3f9f6;border:1px solid #d7e8e1;font-weight:900}.activity{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:18px}.visual{min-height:320px;display:grid;place-items:center;padding:18px;border-radius:8px;background:#f7fbf8;border:1px solid #d7e8e1}.choices{display:grid;gap:10px}.choice{width:100%;min-height:54px;padding:11px 13px;border-radius:8px;border:1px solid var(--line);background:#fbfefd;text-align:left;color:var(--ink)}.choice:hover{background:#fff;border-color:#9fc4bb}.choice.selected{background:#e6f4ef;border-color:var(--teal);box-shadow:inset 4px 0 0 var(--teal);font-weight:900}.feedback{min-height:92px;margin-top:14px;padding:14px;border-radius:8px;background:#f3f6f4;border:1px solid #c9dcd6;color:#344a50}.meter-line{width:min(420px,100%)}input[type=range]{width:100%;accent-color:var(--teal)}.score{font-size:3rem;font-weight:900;color:var(--teal-dark);text-align:center}.weather-icons,.body-map,.step-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}.icon-tile,.body-part,.step-chip{min-height:96px;display:grid;place-items:center;text-align:center;padding:12px;border-radius:8px;background:#fff;border:1px solid var(--line);font-weight:900}.breath-orb{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,#fff 0 28%,transparent 29%),radial-gradient(circle at 35% 30%,#e0f7eb,#78bea0);box-shadow:0 0 0 20px rgba(120,190,160,.16);animation:breathe 5.6s ease-in-out infinite}@keyframes breathe{0%,100%{transform:scale(.78)}45%,60%{transform:scale(1)}}.reflect{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.reflect label{display:block;margin-bottom:8px;font-weight:900}textarea{width:100%;min-height:110px;resize:vertical;padding:12px;border-radius:8px;border:1px solid #c8d9d4}.teacher{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.reset{min-height:44px;margin-top:14px;padding:9px 14px;border:0;border-radius:8px;background:#455b61;color:#fff;font-weight:900}@media(max-width:880px){.hero-grid,.story,.activity,.goals,.reflect,.teacher{grid-template-columns:1fr}.signal{min-height:220px}}@media(max-width:560px){.wrap{width:min(100% - 22px,1120px)}.weather-icons,.body-map,.step-list{grid-template-columns:1fr}.panel,.card{padding:16px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+  </style>
+</head>
+<body>
+  <div class="top wrap"><a class="back" href="../sel-learning-center/index.html">回教材中心</a></div>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">01 情緒覺察｜SEL 社會情緒學習</p>
+        <h1>情緒溫度計</h1>
+        <p class="lead">用 0 到 10 的刻度辨認情緒強度，練習把感覺說得更清楚。</p>
+        <ul class="goals"><li>能用數字描述情緒強度</li><li>能分辨低、中、高強度情緒</li><li>能依強度選擇合適的照顧方式</li></ul>
+      </div>
+      <div class="signal"><div class="meter-line"><div class="score" id="score">5</div><input id="range" type="range" min="0" max="10" value="5" aria-label="情緒溫度刻度"><p id="rangeText">現在是中等強度，先停一下再選擇行動。</p></div></div>
+    </div>
+  </header>
+  <section class="section band">
+    <div class="wrap story">
+      <div class="panel"><h2>情境故事</h2><p>先讀故事，再操作互動任務。可以自己想，也可以和同學討論。</p></div>
+      <p class="panel" style="font-size:1.22rem;font-weight:900">下課時，你想借的球被同學先拿走了。你有點失望，也開始覺得不公平。</p>
+    </div>
+  </section>
+  <main class="section wrap">
+    <h2>互動任務</h2>
+    <div class="activity">
+      <div class="visual"><div class="meter-line"><div class="score" id="score">5</div><input id="range" type="range" min="0" max="10" value="5" aria-label="情緒溫度刻度"><p id="rangeText">現在是中等強度，先停一下再選擇行動。</p></div></div>
+      <div class="card">
+        <p style="margin-top:0;font-weight:900">拖曳溫度計，看看不同強度可以怎麼照顧自己。</p>
+        <div class="choices">
+          <button class="choice" type="button" data-feedback="可以先說出感覺，或請同學下次輪流。低強度時適合用簡短對話處理。">0-3 分：有點不舒服</button><button class="choice" type="button" data-feedback="先停一下，喝水或深呼吸，再說明自己需要公平輪流。">4-7 分：開始明顯生氣</button><button class="choice" type="button" data-feedback="先離開衝突現場或找老師協助，等身體降溫再討論。">8-10 分：快要爆發</button>
+        </div>
+        <div class="feedback" id="feedback" aria-live="polite">點選一個選項，這裡會顯示回饋與下一步提醒。</div>
+        <button class="reset" type="button" id="reset">重新練習</button>
+      </div>
+    </div>
+  </main>
+  <section class="section band">
+    <div class="wrap">
+      <h2>反思問題</h2>
+      <div class="reflect"><div class="card"><label for="q1">1. 我今天的情緒大約是幾分？</label><textarea id="q1" placeholder="把你的想法寫下來。"></textarea></div><div class="card"><label for="q2">2. 我的身體給了我哪些提醒？</label><textarea id="q2" placeholder="把你的想法寫下來。"></textarea></div><div class="card"><label for="q3">3. 下次分數升高時，我可以先做什麼？</label><textarea id="q3" placeholder="把你的想法寫下來。"></textarea></div></div>
+    </div>
+  </section>
+  <section class="section wrap">
+    <h2>教師提醒</h2>
+    <div class="teacher"><article class="card"><p>避免要求學生立刻冷靜，先協助命名與量化情緒。</p></article><article class="card"><p>可請學生用手勢比出溫度，降低公開表達壓力。</p></article><article class="card"><p>強調高分不代表錯，而是需要更快使用安全策略。</p></article></div>
+  </section>
+  <script>
+    const feedback = document.querySelector("#feedback");
+    document.querySelectorAll(".choice").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".choice").forEach((item) => {
+          item.classList.remove("selected");
+          item.removeAttribute("aria-pressed");
+        });
+        button.classList.add("selected");
+        button.setAttribute("aria-pressed", "true");
+        feedback.textContent = button.dataset.feedback;
+      });
+    });
+    document.querySelector("#reset").addEventListener("click", () => {
+      document.querySelectorAll(".choice").forEach((item) => {
+        item.classList.remove("selected");
+        item.removeAttribute("aria-pressed");
+      });
+      feedback.textContent = "點選一個選項，這裡會顯示回饋與下一步提醒。";
+    });
+    document.querySelectorAll("#range").forEach((range) => {
+      const score = range.parentElement.querySelector("#score");
+      const text = range.parentElement.querySelector("#rangeText");
+      range.addEventListener("input", () => {
+        const value = Number(range.value);
+        score.textContent = value;
+        text.textContent = value <= 3 ? "低強度：可以用一句話說出感覺。" : value <= 7 ? "中強度：先停一下，讓身體降溫。" : "高強度：先找安全距離或請大人協助。";
+      });
+    });
+  </script>
+</body>
+</html>
